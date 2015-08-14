@@ -3,42 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>上线发布检查清单（持续更新中） | lynulzy的自留地</title>
+  <title>关于Runtime实际应用的疑惑 | lynulzy的自留地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在打包发布的时候有许多需要注意的细节，比如三方SDK的状态设置，日志的输出，编译标志的设置，繁复的细节如果能维护一份清单，那么会对以后的上线工作有利，也可以避免不必要的时间浪费.
+  <meta name="description" content="Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。
+从这篇文章开始说起  
+介绍了Runtime的一些基础知识，基本概念。
 
-应用更新功能是否可用
-用户协议的网址
-分享的连接是否可用
-提交的审核信息中帐号是否可用
-推送标记是否设置为发布模式。
-提交版本的时候需要把ipa保存一份，以确保.dsYM文件能够保存，出现bug可以查看崩溃日志。
-不要">
+Objective-C对象在Runti">
 <meta property="og:type" content="article">
-<meta property="og:title" content="上线发布检查清单（持续更新中）">
-<meta property="og:url" content="http://lynulzy.info/2015/08/12/上线发布检查清单（持续更新中）/index.html">
+<meta property="og:title" content="关于Runtime实际应用的疑惑">
+<meta property="og:url" content="http://lynulzy.info/2015/08/14/关于Runtime实际应用的疑惑/index.html">
 <meta property="og:site_name" content="lynulzy的自留地">
-<meta property="og:description" content="在打包发布的时候有许多需要注意的细节，比如三方SDK的状态设置，日志的输出，编译标志的设置，繁复的细节如果能维护一份清单，那么会对以后的上线工作有利，也可以避免不必要的时间浪费.
+<meta property="og:description" content="Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。
+从这篇文章开始说起  
+介绍了Runtime的一些基础知识，基本概念。
 
-应用更新功能是否可用
-用户协议的网址
-分享的连接是否可用
-提交的审核信息中帐号是否可用
-推送标记是否设置为发布模式。
-提交版本的时候需要把ipa保存一份，以确保.dsYM文件能够保存，出现bug可以查看崩溃日志。
-不要">
-<meta property="og:updated_time" content="2015-08-12T15:14:08.000Z">
+Objective-C对象在Runti">
+<meta property="og:updated_time" content="2015-08-14T03:16:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="上线发布检查清单（持续更新中）">
-<meta name="twitter:description" content="在打包发布的时候有许多需要注意的细节，比如三方SDK的状态设置，日志的输出，编译标志的设置，繁复的细节如果能维护一份清单，那么会对以后的上线工作有利，也可以避免不必要的时间浪费.
+<meta name="twitter:title" content="关于Runtime实际应用的疑惑">
+<meta name="twitter:description" content="Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。
+从这篇文章开始说起  
+介绍了Runtime的一些基础知识，基本概念。
 
-应用更新功能是否可用
-用户协议的网址
-分享的连接是否可用
-提交的审核信息中帐号是否可用
-推送标记是否设置为发布模式。
-提交版本的时候需要把ipa保存一份，以确保.dsYM文件能够保存，出现bug可以查看崩溃日志。
-不要">
+Objective-C对象在Runti">
   
     <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
   
@@ -203,11 +191,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-上线发布检查清单（持续更新中）" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-关于Runtime实际应用的疑惑" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/08/12/上线发布检查清单（持续更新中）/" class="article-date">
-  	<time datetime="2015-08-12T15:09:16.000Z" itemprop="datePublished">2015-08-12</time>
+      <a href="/2015/08/14/关于Runtime实际应用的疑惑/" class="article-date">
+  	<time datetime="2015-08-14T02:43:23.000Z" itemprop="datePublished">2015-08-14</time>
 </a>
     </div>
   
@@ -220,7 +208,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      上线发布检查清单（持续更新中）
+      关于Runtime实际应用的疑惑
     </h1>
   
 
@@ -228,10 +216,6 @@
       
       <div class="article-info article-info-post">
         
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/上线-清单/">上线 清单</a></li></ul>
-	</div>
-
         
 
         <div class="clearfix"></div>
@@ -240,16 +224,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在打包发布的时候有许多需要注意的细节，比如三方SDK的状态设置，日志的输出，编译标志的设置，繁复的细节如果能维护一份清单，那么会对以后的上线工作有利，也可以避免不必要的时间浪费.</p>
-<ol>
-<li>应用更新功能是否可用</li>
-<li>用户协议的网址</li>
-<li>分享的连接是否可用</li>
-<li>提交的审核信息中帐号是否可用</li>
-<li>推送标记是否设置为发布模式。</li>
-<li>提交版本的时候需要把ipa保存一份，以确保.dsYM文件能够保存，出现bug可以查看崩溃日志。</li>
-<li>不要有log信息（important!）</li>
-</ol>
+        <p>Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。</p>
+<p>从这篇<a href="http://www.cocoachina.com/ios/20141008/9844.html" target="_blank" rel="external">文章</a>开始说起  </p>
+<p>介绍了Runtime的一些基础知识，基本概念。</p>
+<ul>
+<li>Objective-C对象在Runtime下转换成C的形式</li>
+<li>集成自NSObject类能在Runtime角度带来什么样的好处</li>
+<li>objc_msgSend方法执行过程</li>
+<li>消息转发（这个有使用场景）</li>
+</ul>
+<p>其中提到的一个场景<br>消息转发，在另一篇文章中也有详细的阐述，当obj_msgSend找不到类中对方法的实现的时候有三个入口可以手动的提供相应的实现方法，在<a href="http://www.cnblogs.com/biosli/p/NSObject_inherit_2.html" target="_blank" rel="external">这里</a>有详细阐述。</p>
+<p>针对Runtime的实际使用场景，我也找到另外一篇<a href="http://www.cnblogs.com/ludashi/p/4673935.html" target="_blank" rel="external">使用Runtime给Model类赋值</a></p>
+<h3 id="So_问题来了">So 问题来了</h3><p>在网上也找了一些资料，<strong><em>然而</em></strong>指明某种应用场景的很少，而自己对这方面的理解也并不深刻，希望有过使用经验的朋友能够分享一些使用Runtime的场景，或者某些关于Runtime的（黑魔法）。</p>
+<p>之后会在此整理一些好的经验，感谢各位<a href="http://www.v2ex.com/t/213151#reply0" target="_blank" rel="external">V友</a>！</p>
 
       
     </div>
@@ -259,18 +246,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/08/14/关于Runtime实际应用的疑惑/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          关于Runtime实际应用的疑惑
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/08/11/开发笔记整理/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">开发笔记整理</div>
+    <a href="/2015/08/12/上线发布检查清单（持续更新中）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">上线发布检查清单（持续更新中）</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -297,7 +275,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="上线发布检查清单（持续更新中）" data-title="上线发布检查清单（持续更新中）" data-url="http://lynulzy.info/2015/08/12/上线发布检查清单（持续更新中）/"></div>
+	<div class="ds-thread" data-thread-key="关于Runtime实际应用的疑惑" data-title="关于Runtime实际应用的疑惑" data-url="http://lynulzy.info/2015/08/14/关于Runtime实际应用的疑惑/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

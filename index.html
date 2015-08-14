@@ -180,6 +180,67 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-关于Runtime实际应用的疑惑" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/14/关于Runtime实际应用的疑惑/" class="article-date">
+  	<time datetime="2015-08-14T02:43:23.000Z" itemprop="datePublished">2015-08-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/14/关于Runtime实际应用的疑惑/">关于Runtime实际应用的疑惑</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。</p>
+<p>从这篇<a href="http://www.cocoachina.com/ios/20141008/9844.html" target="_blank" rel="external">文章</a>开始说起  </p>
+<p>介绍了Runtime的一些基础知识，基本概念。</p>
+<ul>
+<li>Objective-C对象在Runtime下转换成C的形式</li>
+<li>集成自NSObject类能在Runtime角度带来什么样的好处</li>
+<li>objc_msgSend方法执行过程</li>
+<li>消息转发（这个有使用场景）</li>
+</ul>
+<p>其中提到的一个场景<br>消息转发，在另一篇文章中也有详细的阐述，当obj_msgSend找不到类中对方法的实现的时候有三个入口可以手动的提供相应的实现方法，在<a href="http://www.cnblogs.com/biosli/p/NSObject_inherit_2.html" target="_blank" rel="external">这里</a>有详细阐述。</p>
+<p>针对Runtime的实际使用场景，我也找到另外一篇<a href="http://www.cnblogs.com/ludashi/p/4673935.html" target="_blank" rel="external">使用Runtime给Model类赋值</a></p>
+<h3 id="So_问题来了">So 问题来了</h3><p>在网上也找了一些资料，<strong><em>然而</em></strong>指明某种应用场景的很少，而自己对这方面的理解也并不深刻，希望有过使用经验的朋友能够分享一些使用Runtime的场景，或者某些关于Runtime的（黑魔法）。</p>
+<p>之后会在此整理一些好的经验，感谢各位<a href="http://www.v2ex.com/t/213151#reply0" target="_blank" rel="external">V友</a>！</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
+  
     <article id="post-上线发布检查清单（持续更新中）" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
