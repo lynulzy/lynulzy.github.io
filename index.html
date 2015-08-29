@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+						<a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,84 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-MVVM初体验" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/29/MVVM初体验/" class="article-date">
+  	<time datetime="2015-08-29T07:36:09.000Z" itemprop="datePublished">2015-08-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/29/MVVM初体验/">MVVM初体验</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> MVVM是一种软件设计中的架构模式。目前在MVC诟病下逐渐由前端过度到移动端的软件设计中。</p>
+<hr>
+<h4 id="组成">组成</h4><h5 id="Model">Model</h5><p>代表数据状态或者数据访问层的内容。</p>
+<h4 id="View">View</h4><p>与在MVC和MVP设计模式中一样，View即用户界面。</p>
+<h4 id="View_Model">View Model</h4><p>ViewModel是View的抽象，其中包含的是共用属性和命令。与MVC模式中的controller、MVP模式中的Presenter均不同。MVVM拥有一个粘合剂。在ViewModel中，这个粘合剂协调View和数据。ViewModel被描述为数据模型中的数据状态。</p>
+<hr>
+<p>MVVM是一种编程范式而并不会因此限制你的编程思想。实现技术也有许多种。</p>
+<p>具体的实现：</p>
+<ul>
+<li><strong>View</strong></li>
+</ul>
+<p>在实际使用中就是一个ViewController，基于MVVM的基本思想，在ViewController中我们处理的仅仅是用户事件的监听和主要业务逻辑，界面逻辑的处理，但并不会涉及具体的业务逻辑。例如，在登录页面中，View层次负责用户输入数据的验证、登录请求的发起等业务逻辑， 但是实现这些技术的细节，并不在View中实现。</p>
+<ul>
+<li><strong>ViewModel</strong></li>
+</ul>
+<p>这是一个基于 <code>NSObject</code> 的专门处理View页面产生的业务逻辑和界面逻辑实现的类，这个类仅由相应的View调用（由于其功能特殊性，仅针对某个View的业务逻辑进行设计和实现）。<br>例如，在Demo中，登录页面对应的ViewModel中包含以下方法</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@author lzy, 15-08-24 09:08:53</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@brief  检查用户输入是否合法</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param userName 要检查的用户名</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param password 要检查的密码</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (BOOL)checkTheUserInputNameString: (NSString <span class="keyword">*</span>) userName passwordString: (NSString <span class="keyword">*</span>) password;</span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@author lzy, 15-08-24 16:08:24</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@brief  发起登录请求</span></span><br><span class="line"> <span class="keyword">*</span></span><br><span class="line"> <span class="keyword">*</span>  <span class="comment">@param requestView 在此页面发送请求，并且显示HUD</span></span><br><span class="line"> <span class="keyword">*</span>/</span><br><span class="line">- (void)requestLoginInView:(UIView <span class="keyword">*</span>)requestView;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>Model</strong></li>
+</ul>
+<p>Model在本例中具体来讲就是一个用户模型，包含用户的姓名、电话、等属性，但是对于此Model，仅由ViewModel去更新，读取，修改，删除。同样也是基于 <code>View 不负责具体的业务逻辑</code>的原则。</p>
+<ul>
+<li><strong>类之间的通讯</strong></li>
+</ul>
+<p>View发起一个事件之后，由ViewModel处理事件并通过带参的Block回调给View，再由View显示给用户结果。</p>
+<p><strong><em>项目<a href="https://github.com/lynulzy/MVVMPrictice" target="_blank" rel="external">地址</a></em></strong></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVVM/">MVVM</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
   
     <article id="post-AFNetwork部分文档" class="article article-type-post" itemscope itemprop="blogPost">
   
