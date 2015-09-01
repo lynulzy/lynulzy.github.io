@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+						<a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/持久化存储/" style="font-size: 10px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,76 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-数据持久化之【对象归档】" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/31/数据持久化之【对象归档】/" class="article-date">
+  	<time datetime="2015-08-31T15:15:04.000Z" itemprop="datePublished">2015-08-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/31/数据持久化之【对象归档】/">数据持久化之【对象归档】</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对象的持久化要求对象遵循 <code>NSCoding</code> 协议。本篇重点讲解自定义类实现归档、解档。</p>
+<p>一个类遵循了<code>NSCoding</code>协议，则必须要实现协议中的两个代理方法。</p>
+<p><img src="http://ww3.sinaimg.cn/large/77cf5fafjw1evnchp69fuj20mi02wt9t.jpg" alt="两个代理方法"></p>
+<p>这两个代理方法分别为</p>
+<pre><code><span class="pp">- <span class="params">(instancetype)</span>initWithCoder:<span class="params">(<span class="variable">NSCoder</span> *)</span>aDecoder </span>
+</code></pre><p>此代理方法是一个初始化方法，但同时也是协议中的代理方法，所以其样式应遵循初始化方法的写法，对应的是解档的代理方法。</p>
+<pre><code><span class="pp">- <span class="params">(void)</span>encodeWithCoder:<span class="params">(<span class="variable">NSCoder</span> *)</span>aCoder</span>
+</code></pre><p>此方法对应的是归档的代理方法。</p>
+<p>具体的实现看起来是这样的：</p>
+<p><strong>解档</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">        <span class="comment">//与encodeWithCoder中的内容保持一致</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSString</span> *aProperty <span class="keyword">in</span> [<span class="keyword">self</span> allPropertyNames]) &#123;</span><br><span class="line">            [aDecoder decodeObjectForKey:aProperty];</span><br><span class="line">            [<span class="keyword">self</span> setValue:[aDecoder decodeObjectForKey:aProperty] forKey:aProperty];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>归档</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)encodeWithCoder:(<span class="built_in">NSCoder</span> *)aCoder &#123;</span><br><span class="line">    <span class="comment">//处理需要持久化的属性</span></span><br><span class="line"><span class="comment">//    [aCoder encodeObject:&lt;#(id)#&gt; forKey:&lt;#(NSString *)#&gt;]</span></span><br><span class="line">    <span class="built_in">NSArray</span> *propertyNames = [<span class="keyword">self</span> allPropertyNames];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *aProperty <span class="keyword">in</span> propertyNames) &#123;</span><br><span class="line">        [aCoder encodeObject:[<span class="keyword">self</span> valueForKey:aProperty] forKey:aProperty];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在仍有几个问题需要解决：</p>
+<ol>
+<li>对象归档的文件类型是否是固定的，编码方式是否透明？</li>
+<li>对象的属性中仍包含自定义类的归档、解档情况是什么样的？</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/持久化存储/">持久化存储</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
   
     <article id="post-MVVM初体验" class="article article-type-post" itemscope itemprop="blogPost">
   

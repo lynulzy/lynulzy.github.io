@@ -3,36 +3,34 @@
 <head>
   <meta charset="utf-8">
   
-  <title>AFNetwork文档学习 | lynulzy的自留地</title>
+  <title>数据持久化之【对象归档】 | lynulzy的自留地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="准备在项目中使用AFNetworking作为网络请求库，使用之前多看看，赶感觉生活更美好
-##NSURLConnection
-主要功能包含请求创建、响应结果序列化、网络状态检测、安全性、所有请求操作的管理。
+  <meta name="description" content="对象的持久化要求对象遵循 NSCoding 协议。本篇重点讲解自定义类实现归档、解档。
+一个类遵循了NSCoding协议，则必须要实现协议中的两个代理方法。
 
-子类化注意事项
-
-对于 iOS7 以后，如果有大量的针对网络请求的鼓励使用 AFHTTPSessionManger的子类。这个子类应该提供单例类方法，这样关于请求的认证和一些其他的设置就可以">
+这两个代理方法分别为
+- (instancetype)initWithCoder:(NSCoder *)aDecoder 
+此代理方法是一个初始化方法，但同时也是协议中的代理方法，所以其样式应遵循初始化方法的写法，对应的是解档的代理方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AFNetwork文档学习">
-<meta property="og:url" content="http://lynulzy.info/2015/08/21/AFNetwork部分文档/index.html">
+<meta property="og:title" content="数据持久化之【对象归档】">
+<meta property="og:url" content="http://lynulzy.info/2015/08/31/数据持久化之【对象归档】/index.html">
 <meta property="og:site_name" content="lynulzy的自留地">
-<meta property="og:description" content="准备在项目中使用AFNetworking作为网络请求库，使用之前多看看，赶感觉生活更美好
-##NSURLConnection
-主要功能包含请求创建、响应结果序列化、网络状态检测、安全性、所有请求操作的管理。
+<meta property="og:description" content="对象的持久化要求对象遵循 NSCoding 协议。本篇重点讲解自定义类实现归档、解档。
+一个类遵循了NSCoding协议，则必须要实现协议中的两个代理方法。
 
-子类化注意事项
-
-对于 iOS7 以后，如果有大量的针对网络请求的鼓励使用 AFHTTPSessionManger的子类。这个子类应该提供单例类方法，这样关于请求的认证和一些其他的设置就可以">
-<meta property="og:updated_time" content="2015-08-21T01:15:43.000Z">
+这两个代理方法分别为
+- (instancetype)initWithCoder:(NSCoder *)aDecoder 
+此代理方法是一个初始化方法，但同时也是协议中的代理方法，所以其样式应遵循初始化方法的写法，对应的是解档的代理方法。">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/77cf5fafjw1evnchp69fuj20mi02wt9t.jpg">
+<meta property="og:updated_time" content="2015-09-01T15:15:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AFNetwork文档学习">
-<meta name="twitter:description" content="准备在项目中使用AFNetworking作为网络请求库，使用之前多看看，赶感觉生活更美好
-##NSURLConnection
-主要功能包含请求创建、响应结果序列化、网络状态检测、安全性、所有请求操作的管理。
+<meta name="twitter:title" content="数据持久化之【对象归档】">
+<meta name="twitter:description" content="对象的持久化要求对象遵循 NSCoding 协议。本篇重点讲解自定义类实现归档、解档。
+一个类遵循了NSCoding协议，则必须要实现协议中的两个代理方法。
 
-子类化注意事项
-
-对于 iOS7 以后，如果有大量的针对网络请求的鼓励使用 AFHTTPSessionManger的子类。这个子类应该提供单例类方法，这样关于请求的认证和一些其他的设置就可以">
+这两个代理方法分别为
+- (instancetype)initWithCoder:(NSCoder *)aDecoder 
+此代理方法是一个初始化方法，但同时也是协议中的代理方法，所以其样式应遵循初始化方法的写法，对应的是解档的代理方法。">
   
     <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
   
@@ -197,11 +195,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-AFNetwork部分文档" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-数据持久化之【对象归档】" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/08/21/AFNetwork部分文档/" class="article-date">
-  	<time datetime="2015-08-21T01:05:27.000Z" itemprop="datePublished">2015-08-21</time>
+      <a href="/2015/08/31/数据持久化之【对象归档】/" class="article-date">
+  	<time datetime="2015-08-31T15:15:04.000Z" itemprop="datePublished">2015-08-31</time>
 </a>
     </div>
   
@@ -214,7 +212,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      AFNetwork文档学习
+      数据持久化之【对象归档】
     </h1>
   
 
@@ -223,7 +221,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文档、三方库/">文档、三方库</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/持久化存储/">持久化存储</a></li></ul>
 	</div>
 
         
@@ -234,66 +232,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>准备在项目中使用AFNetworking作为网络请求库，使用之前多看看，赶感觉生活更美好</p>
-<p>##NSURLConnection</p>
-<p>主要功能包含请求创建、响应结果序列化、网络状态检测、安全性、所有请求操作的管理。</p>
-<ul>
-<li><em>子类化注意事项</em></li>
-</ul>
-<p>对于 iOS7 以后，如果有大量的针对网络请求的鼓励使用 <code>AFHTTPSessionManger</code>的子类。这个子类应该提供单例类方法，这样关于请求的认证和一些其他的设置就可以在项目中全局化共享。</p>
-<ul>
-<li><em>需要重写的方法</em></li>
-</ul>
-<p>为了改变所有请求的功能，需要重载 <code>HTTPRequestOperationWithRequest:success:failure</code>方法。</p>
-<ul>
-<li><em>监测网络状况</em></li>
-</ul>
-<p>网络状况的改变可以通过 <code>reachabilityManager</code> 属性监测，这样可以阻塞或者挂起某些请求。</p>
-<hr>
-<p>##NSURLSession</p>
-<p><code>AFURLSessionManager</code>创建并管理由 <code>NSURLSessionConfiguration</code> 设置过的 <code>NSURLSession</code>对象。该对象遵循<code>&lt;NSURLSessionDataDelegate&gt;</code>,<br><code>&lt;NSURLSessionDownloadDelegate&gt;</code>,<br><code>&lt;NSURLSessionDelegate&gt;</code>协议</p>
-<ul>
-<li><em>子类化注意事项</em></li>
-</ul>
-<p>这个类是AFHTTPSessionManager的基类，<code>AFHTTPSessionManager</code>的优点在于优化了HTTP请求，如果想要扩展关于HTTP请求，请对AFHTTPSessionManager子类化。</p>
-<ul>
-<li><em>实现的代理方法</em></li>
-</ul>
-<h3 id="NSURLSessionDelegate"><code>NSURLSessionDelegate</code></h3><ul>
-<li><code>URLSession:didBecomeInvalidWithError:</code></li>
-<li><code>URLSession:didReceiveChallenge:completionHandler:</code></li>
-<li><code>URLSessionDidFinishEventsForBackgroundURLSession:</code></li>
-</ul>
-<h3 id="NSURLSessionTaskDelegate"><code>NSURLSessionTaskDelegate</code></h3><ul>
-<li><code>URLSession:willPerformHTTPRedirection:newRequest:completionHandler:</code></li>
-<li><code>URLSession:task:didReceiveChallenge:completionHandler:</code></li>
-<li><code>URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:</code></li>
-<li><code>URLSession:task:didCompleteWithError:</code></li>
-</ul>
-<h3 id="NSURLSessionDataDelegate"><code>NSURLSessionDataDelegate</code></h3><ul>
-<li><code>URLSession:dataTask:didReceiveResponse:completionHandler:</code></li>
-<li><code>URLSession:dataTask:didBecomeDownloadTask:</code></li>
-<li><code>URLSession:dataTask:didReceiveData:</code></li>
-<li><code>URLSession:dataTask:willCacheResponse:completionHandler:</code></li>
-</ul>
-<h3 id="NSURLSessionDownloadDelegate"><code>NSURLSessionDownloadDelegate</code></h3><ul>
-<li><code>URLSession:downloadTask:didFinishDownloadingToURL:</code></li>
-<li><code>URLSession:downloadTask:didWriteData:totalBytesWritten:totalBytesWritten:totalBytesExpectedToWrite:</code></li>
-<li><code>URLSession:downloadTask:didResumeAtOffset:expectedTotalBytes:</code> </li>
-</ul>
-<p><strong>如果子类中有任何需要重载代理方法的，必须首先调用父类的代理方法的实现</strong></p>
-<hr>
-<h2 id="附">附</h2><h3 id="NSURLSession">NSURLSession</h3><p>此API用来通过HTTP协议下载内容，提供了大量的代理方法来提供认证功能，使应用能够在后台或者当应用挂起的时候下载任务。</p>
-<p>通过NSURLSession的API，应用创建了一系列的会话，每个都协调着一组相关的数据传输任务。比如，如果你在实现一个浏览器，那么应用会为每个标签或者窗口创建一个sesssion.每个session都会添加一系列的任务，每个任务都代表向一个特定的URL的网络请求。</p>
-<p>一个会话的行为有一个设置对象决定，因为这里有三种类型的设置对象，所以相应的就有三种session对象。a.默认的与NSURLConnection很像，代表着session对象不缓存任何内容；b.download session把结果存储到一个文件中，并且当应用挂起、退出、甚至崩溃的时候持续性传输。</p>
-<p>通过这些session对象，你可以调度三种类型的任务，数据存储在内存中的，下载到磁盘上的，将磁盘上的文件上传并接收响应的任务。</p>
-<p>与其他网络API类似，NSURLSession也是异步的，它的数据返回有两种方式，当然，这取决于你调用了哪个方法:</p>
-<ul>
-<li>请求完成时的block，请求成功或者失败的时候通过block把数据返回到应用。</li>
-<li>接收到数据的时候调用自定义的代理方法。</li>
-<li>下载文件的时候调用自定义的代理方法。</li>
-</ul>
-<hr>
+        <p>对象的持久化要求对象遵循 <code>NSCoding</code> 协议。本篇重点讲解自定义类实现归档、解档。</p>
+<p>一个类遵循了<code>NSCoding</code>协议，则必须要实现协议中的两个代理方法。</p>
+<p><img src="http://ww3.sinaimg.cn/large/77cf5fafjw1evnchp69fuj20mi02wt9t.jpg" alt="两个代理方法"></p>
+<p>这两个代理方法分别为</p>
+<pre><code><span class="pp">- <span class="params">(instancetype)</span>initWithCoder:<span class="params">(<span class="variable">NSCoder</span> *)</span>aDecoder </span>
+</code></pre><p>此代理方法是一个初始化方法，但同时也是协议中的代理方法，所以其样式应遵循初始化方法的写法，对应的是解档的代理方法。</p>
+<pre><code><span class="pp">- <span class="params">(void)</span>encodeWithCoder:<span class="params">(<span class="variable">NSCoder</span> *)</span>aCoder</span>
+</code></pre><p>此方法对应的是归档的代理方法。</p>
+<p>具体的实现看起来是这样的：</p>
+<p><strong>解档</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)initWithCoder:(<span class="built_in">NSCoder</span> *)aDecoder &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</span><br><span class="line">        <span class="comment">//与encodeWithCoder中的内容保持一致</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSString</span> *aProperty <span class="keyword">in</span> [<span class="keyword">self</span> allPropertyNames]) &#123;</span><br><span class="line">            [aDecoder decodeObjectForKey:aProperty];</span><br><span class="line">            [<span class="keyword">self</span> setValue:[aDecoder decodeObjectForKey:aProperty] forKey:aProperty];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>归档</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)encodeWithCoder:(<span class="built_in">NSCoder</span> *)aCoder &#123;</span><br><span class="line">    <span class="comment">//处理需要持久化的属性</span></span><br><span class="line"><span class="comment">//    [aCoder encodeObject:&lt;#(id)#&gt; forKey:&lt;#(NSString *)#&gt;]</span></span><br><span class="line">    <span class="built_in">NSArray</span> *propertyNames = [<span class="keyword">self</span> allPropertyNames];</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *aProperty <span class="keyword">in</span> propertyNames) &#123;</span><br><span class="line">        [aCoder encodeObject:[<span class="keyword">self</span> valueForKey:aProperty] forKey:aProperty];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在仍有几个问题需要解决：</p>
+<ol>
+<li>对象归档的文件类型是否是固定的，编码方式是否透明？</li>
+<li>对象的属性中仍包含自定义类的归档、解档情况是什么样的？</li>
+</ol>
 
       
     </div>
@@ -303,18 +259,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/08/29/MVVM初体验/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          MVVM初体验
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/08/19/面试题整理/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">面试题整理 (题目)</div>
+    <a href="/2015/08/29/MVVM初体验/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MVVM初体验</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -341,7 +288,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="AFNetwork部分文档" data-title="AFNetwork文档学习" data-url="http://lynulzy.info/2015/08/21/AFNetwork部分文档/"></div>
+	<div class="ds-thread" data-thread-key="数据持久化之【对象归档】" data-title="数据持久化之【对象归档】" data-url="http://lynulzy.info/2015/08/31/数据持久化之【对象归档】/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
