@@ -22,7 +22,8 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder 
 此代理方法是一个初始化方法，但同时也是协议中的代理方法，所以其样式应遵循初始化方法的写法，对应的是解档的代理方法。">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/77cf5fafjw1evnchp69fuj20mi02wt9t.jpg">
-<meta property="og:updated_time" content="2015-09-01T15:15:05.000Z">
+<meta property="og:image" content="http://ww3.sinaimg.cn/mw690/77cf5fafgw1evnv0awrcaj20w80oa79t.jpg">
+<meta property="og:updated_time" content="2015-09-02T01:41:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据持久化之【对象归档】">
 <meta name="twitter:description" content="对象的持久化要求对象遵循 NSCoding 协议。本篇重点讲解自定义类实现归档、解档。
@@ -250,6 +251,10 @@
 <li>对象归档的文件类型是否是固定的，编码方式是否透明？</li>
 <li>对象的属性中仍包含自定义类的归档、解档情况是什么样的？</li>
 </ol>
+<hr>
+<p>Q1：<br>对象归档类型可以有多种格式，而且编码方式是安全的。具体来讲，归档形成的文件后缀是可以设置为任意格式的，<code>.archiever</code> 、<code>.txt</code>…都可以。如图</p>
+<p><img src="http://ww3.sinaimg.cn/mw690/77cf5fafgw1evnv0awrcaj20w80oa79t.jpg" alt="多种格式"></p>
+<p>而且即使是可以识别的格式，文件内容也具有安全性。</p>
 
       
     </div>
