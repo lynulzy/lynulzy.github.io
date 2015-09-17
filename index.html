@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/持久化存储/" style="font-size: 10px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+						<a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 10px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
 					</div>
 				</section>
 				
@@ -180,6 +180,143 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-访问用户目录" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/17/访问用户目录/" class="article-date">
+  	<time datetime="2015-09-17T03:03:52.000Z" itemprop="datePublished">2015-09-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/17/访问用户目录/">访问用户目录</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###问题<br>在模拟器中使用 <code>NSHomeDirectory()</code>得到的路径是 <code>~/Application/6B9D870C-B82A-491B-9EAB-91330B811F1F</code> 也即当前应用的沙盒目录，在模拟器环境下，在此目录下创建文件是<em>允许的</em>，</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSError</span> *error;</span><br><span class="line">        <span class="built_in">BOOL</span> createDirSucc = [[<span class="built_in">NSFileManager</span> defaultManager] createDirectoryAtPath:directoryPath</span><br><span class="line">                                  withIntermediateDirectories:<span class="literal">YES</span></span><br><span class="line">                                                   attributes:<span class="literal">nil</span></span><br><span class="line">                                                        error:&amp;error];</span><br><span class="line">        <span class="keyword">if</span> (!createDirSucc || error) &#123;</span><br><span class="line">            DDLog(<span class="string">@"创建目录失败"</span>);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>但是在真机环境下，会得到报错 <code>The operation couldn’t be completed. Operation not permitted</code></p>
+<p>显然是用户权限的问题。</p>
+<p>###探索</p>
+<p><code>- (BOOL)fileExistsAtPath:(NSString *)path isDirectory:(BOOL *)isDirectory;</code> 此函数是判断文件或者文件夹是否存在。如果仔细查看文档会发现，文档中给出这样一段代码来展示此函数如何使用</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *subpaths;</span><br><span class="line"><span class="built_in">BOOL</span> isDir;</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSArray</span> *paths = <span class="built_in">NSSearchPathForDirectoriesInDomains</span></span><br><span class="line">                     (<span class="built_in">NSLibraryDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ([paths count] == <span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSFileManager</span> *fileManager = [[<span class="built_in">NSFileManager</span> alloc] init];</span><br><span class="line">    <span class="built_in">NSString</span> *fontPath = [[paths objectAtIndex:<span class="number">0</span>] stringByAppendingPathComponent:<span class="string">@"Fonts"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ([fileManager fileExistsAtPath:fontPath isDirectory:&amp;isDir] &amp;&amp; isDir) &#123;</span><br><span class="line">        subpaths = [fileManager subpathsAtPath:fontPath];</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>其中 <code>NSSearchPathForDirectoriesInDomains
+                     (NSLibraryDirectory, NSUserDomainMask, YES)</code> 便是报错的症结所在，如果在沙盒中读取文件，需要使用此函数来拼接路径之后再对目录进行读取操作。</p>
+<p>###总结</p>
+<p>在<a href="http://stackoverflow.com/questions/5600269/the-operation-couldn-t-be-completed-operation-not-permitted" target="_blank" rel="external">stackoverflow</a>中找到了这个问题的相关解决方案. 在这里明确一下沙盒目录的使用：</p>
+<ul>
+<li>手动创建和删除文件目录：<br>使用   <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)</span><br><span class="line">  ```      </span><br><span class="line">  **Key word:  <span class="built_in">NSDocumentDirectory</span>**    </span><br><span class="line">- 手动创建之后由系统维护删除：</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">*</span><span class="keyword">*</span>Key word:  NSCachesDirectory<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"></span><br><span class="line">- 临时存储文件，并且马上删除文件：</span><br><span class="line">```NSTemporaryDirectory()</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/报错/">报错</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
+  
+    <article id="post-记录SVN相关问题的解决方法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/09/记录SVN相关问题的解决方法/" class="article-date">
+  	<time datetime="2015-09-09T09:58:22.000Z" itemprop="datePublished">2015-09-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/09/记录SVN相关问题的解决方法/">记录SVN相关问题的解决方法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录一下今天遇到的svn的问题，避免以后出现再浪费太多时间。</p>
+<p>###问题的起因 </p>
+<blockquote>
+<p>The operation could not be performed because “PROJECTNAME” has one or more tree conflicts</p>
+</blockquote>
+<p>关于这个问题我在StackOverflow上也回答过一次。</p>
+<p>###SVN版本降级</p>
+<p>问题描述</p>
+<blockquote>
+<p>在Xcode中如果项目使用的svn版本太低会提示需要版本升级才能使用Xcode提供的svn版本控制服务，升级之后会将Mac自带的svn升级，而此时如果在终端对较新版本的svn将不能使用。–需要对系统的svn版本降级。</p>
+</blockquote>
+<p>如果对于一个习惯使用 Git 的开发者而言，SVN 落后于时代是不言而喻的，但是当前的现状就是不得不坚持使用SVN而不是Git，所以就事论事，怎么将SVN版本降低到可用状态？</p>
+<p>A：<br>我在网络上找了许多相关资料，并没有一种能够解决我所遇到的问题，直到发现这篇<a href="http://www.bubuko.com/infodetail-645823.html" target="_blank" rel="external">文章</a>,在Mac中svn是默认配置，也即一台Mac上默认的会安装一个版本的svn。卸载？不好意思，卸载了会重装，而重装的这个版本也是你所使用是OS版本匹配的SVN版本。  我现在的SVN版本是10.10  默认配置 svn 1.7，恰好能够满足我的需求。</p>
+<p>使用命令</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">brew </span>uninstall svn</span><br></pre></td></tr></table></figure>
+<p>PS： 前提是你安装了<a href="http://brew.sh/" target="_blank" rel="external">Homebrew</a></p>
+<p>###版本回滚之后无法合并到主干</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/版本控制-SVN/">版本控制 SVN</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
+  
     <article id="post-数据持久化之【对象归档】" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -228,6 +365,7 @@
 <p>Q1：<br>对象归档类型可以有多种格式，而且编码方式是安全的。具体来讲，归档形成的文件后缀是可以设置为任意格式的，<code>.archiever</code> 、<code>.txt</code>…都可以。如图</p>
 <p><img src="http://ww3.sinaimg.cn/mw690/77cf5fafgw1evnv0awrcaj20w80oa79t.jpg" alt="多种格式"></p>
 <p>而且即使是可以识别的格式，文件内容也具有安全性。</p>
+<p><a href="http://blog.csdn.net/jiangwei0910410003/article/details/41872551" target="_blank" rel="external">参考</a></p>
 
       
     </div>
