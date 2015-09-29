@@ -3,18 +3,36 @@
 <head>
   <meta charset="utf-8">
   
-  <title>开发笔记整理 | lynulzy的自留地</title>
+  <title>CocoaPods使用注意事项 | lynulzy的自留地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一个iOS开发者的自述">
+  <meta name="description" content="###问题的来源：
+前言
+地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。
+在项目中原先使用的是 AMapSearch + AMap2D ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 AMapSearch + AMapNavi 。
+问题描述完毕。
+###处理
+使用过CocoaPods的朋">
 <meta property="og:type" content="article">
-<meta property="og:title" content="开发笔记整理">
-<meta property="og:url" content="http://lynulzy.info/2015/08/11/开发笔记整理/index.html">
+<meta property="og:title" content="CocoaPods使用注意事项">
+<meta property="og:url" content="http://lynulzy.info/2015/09/29/CocoaPods使用注意事项/index.html">
 <meta property="og:site_name" content="lynulzy的自留地">
-<meta property="og:description" content="一个iOS开发者的自述">
-<meta property="og:updated_time" content="2015-08-11T03:37:20.000Z">
+<meta property="og:description" content="###问题的来源：
+前言
+地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。
+在项目中原先使用的是 AMapSearch + AMap2D ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 AMapSearch + AMapNavi 。
+问题描述完毕。
+###处理
+使用过CocoaPods的朋">
+<meta property="og:updated_time" content="2015-09-29T02:15:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="开发笔记整理">
-<meta name="twitter:description" content="一个iOS开发者的自述">
+<meta name="twitter:title" content="CocoaPods使用注意事项">
+<meta name="twitter:description" content="###问题的来源：
+前言
+地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。
+在项目中原先使用的是 AMapSearch + AMap2D ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 AMapSearch + AMapNavi 。
+问题描述完毕。
+###处理
+使用过CocoaPods的朋">
   
     <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
   
@@ -179,11 +197,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-开发笔记整理" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-CocoaPods使用注意事项" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/08/11/开发笔记整理/" class="article-date">
-  	<time datetime="2015-08-11T03:37:20.000Z" itemprop="datePublished">2015-08-11</time>
+      <a href="/2015/09/29/CocoaPods使用注意事项/" class="article-date">
+  	<time datetime="2015-09-29T01:26:20.000Z" itemprop="datePublished">2015-09-29</time>
 </a>
     </div>
   
@@ -196,7 +214,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      开发笔记整理
+      CocoaPods使用注意事项
     </h1>
   
 
@@ -204,6 +222,10 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CocoaPods/">CocoaPods</a></li></ul>
+	</div>
+
         
 
         <div class="clearfix"></div>
@@ -212,7 +234,43 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>###问题的来源：</p>
+<p>前言</p>
+<p>地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。</p>
+<p>在项目中原先使用的是 <code>AMapSearch + AMap2D</code> ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 <code>AMapSearch + AMapNavi</code> 。</p>
+<p>问题描述完毕。</p>
+<p>###处理</p>
+<p>使用过CocoaPods的朋友知道，在CocoaPods 中添加一个库就是在<code>Podfile</code> 中添加一条记录，并执行 <em>pod install</em> 命令即可。但是在当前（2015-09）CocoaPods 版本稳定版本下 0.38.2 下CocoaPods 集成 AMapSearch 库会出现如下报错</p>
+<blockquote>
+<p>Errno::ENOENT - No such file or directory AMapSearch/AMapSearchKit.framework/Resources</p>
+</blockquote>
+<p>在github上有相关的解决办法，并且有大神表示这是一个CocoaPods版本的bug，在之后的版本会消除。</p>
+<p>总结两种解决办法</p>
+<ol>
+<li>删除报错信息中的指定目录或者文件，然后执行 pod install即可；</li>
+<li>手动删除 workspace 下 Pods 中相关的文件，然后执行pod install.</li>
+</ol>
+<blockquote>
+<p><em>关于手动删除Pods中的三方库</em></p>
+<blockquote>
+<p>pod install 中出现的错误信息，我们发现一个Pod的集成过程中有一步是向相关目录和文件中写入内容的。所以，删除引用可以从删除这些目录和文件中的三方库信息开始。</p>
+<ol>
+<li><strong>Pods</strong> 目录下 <strong>Manifest.lock</strong> 文件中删除AMapSearch行</li>
+<li><strong>Pods</strong> 目录下 删除 <strong>AMapSearch</strong> 目录，这个目录下是AMapSearch的framework文件。</li>
+<li><strong>Pods</strong> 目录下 <strong>Headers-&gt; Public</strong> 下删除 AMapSearch 目录及其文件</li>
+<li><strong>Pods</strong> 目录下 <strong>Target Support Files</strong> 目录中 AMapSearch目录及其文件。</li>
+</ol>
+</blockquote>
+</blockquote>
+<p>过程中可能会一并出现一些关于版本控制的错误，具体的表现是在Xcode中有 <strong> 文件找不到，但实际上这些版本控制下的文件是与当前的工程无关的，清除的方法是在 Terminal 中进入相关文件的上层目录执行 *svn delete \</strong>.</p>
+<h3 id="延伸">延伸</h3><p>今天在看 CocoaPods 的 issue的时候发现cocoaPods是有相关的三方库解除工具的，可以参考<a href="https://github.com/CocoaPods/CocoaPods/issues/3382" target="_blank" rel="external">这个连接</a></p>
+<p>具体来讲就是安装一个名字是 cocoapods-deintegrate的工具，并在工程目录中执行 <em>pod deintegrate</em> 命令。 </p>
+<p>而这个命令的作用则是移除项目中集成的所有 cocoapods 。</p>
+<p>引用一下原文 </p>
+<blockquote>
+<p>A CocoaPods plugin to remove and deintegrate CocoaPods from your project. Removing all traces of CocoaPods from an Xcode project.</p>
+</blockquote>
+
       
     </div>
     
@@ -221,15 +279,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/08/12/上线发布检查清单（持续更新中）/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          上线发布检查清单（持续更新中）
-        
-      </div>
-    </a>
   
+    <a href="/2015/09/21/IDE更新到-Xcode-7-0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">IDE更新到 Xcode 7.0</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -254,7 +308,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="开发笔记整理" data-title="开发笔记整理" data-url="http://lynulzy.info/2015/08/11/开发笔记整理/"></div>
+	<div class="ds-thread" data-thread-key="CocoaPods使用注意事项" data-title="CocoaPods使用注意事项" data-url="http://lynulzy.info/2015/09/29/CocoaPods使用注意事项/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
