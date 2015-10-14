@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>持久化存储解决方案MagicalRecord使用入门 | lynulzy的自留地</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原文在这里
+众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。
+即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，MagicalPanda开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="持久化存储解决方案MagicalRecord使用入门">
+<meta property="og:url" content="http://lynulzy.info/2015/10/12/持久化存储解决方案MagicalRecord使用入门/index.html">
+<meta property="og:site_name" content="lynulzy的自留地">
+<meta property="og:description" content="原文在这里
+众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。
+即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，MagicalPanda开">
+<meta property="og:image" content="http://cdn2.raywenderlich.com/wp-content/uploads/2015/05/Use-xcworkspace-file.png">
+<meta property="og:image" content="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/FirstRun-272x500.png">
+<meta property="og:image" content="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/BeerTrackerTarget1.png">
+<meta property="og:image" content="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/PodsTarget.png">
+<meta property="og:updated_time" content="2015-10-13T10:26:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="持久化存储解决方案MagicalRecord使用入门">
+<meta name="twitter:description" content="原文在这里
+众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。
+即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，MagicalPanda开">
+  
+    <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://ww2.sinaimg.cn/large/77cf5fafgw1eulye2rw5wj20by0g1q41.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">lynulzy</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">说点什么</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/lynulzy" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/u/2010079151" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 20px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://cnfeat.com">cnfeat的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://litten.github.io">litten的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我的博客正在调试...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">lynulzy</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://ww2.sinaimg.cn/large/77cf5fafgw1eulye2rw5wj20by0g1q41.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">lynulzy</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">说点什么</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lynulzy" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/2010079151" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-持久化存储解决方案MagicalRecord使用入门" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/12/持久化存储解决方案MagicalRecord使用入门/" class="article-date">
+  	<time datetime="2015-10-12T14:51:11.000Z" itemprop="datePublished">2015-10-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      持久化存储解决方案MagicalRecord使用入门
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/持久化存储/">持久化存储</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原文在<a href="http://www.raywenderlich.com/106856/getting-started-magicalrecord" target="_blank" rel="external">这里</a></p>
+<p>众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。</p>
+<p>即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，<a href="http://www.magicalpanda.com" target="_blank" rel="external">MagicalPanda</a>开源了一个针对 Core Data 的三方库 – <a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a>。 MagicalRecord 提供了便利的方法来创建那些使用Core Data 所必须的代码，诸如对 Core Data 的设置、查询、更新。它的设计灵感来源于德高望重的 <em>Active Record</em> 设计模式。</p>
+<p>本教程将让你快速上手 MagicalRecord： 你将创建一个应用来追踪你最喜爱的啤酒（或者其他类似的饮料），它将具备以下功能：</p>
+<ol>
+<li>添加啤酒</li>
+<li>评价啤酒</li>
+<li>评论某款啤酒</li>
+<li>为啤酒拍照</li>
+</ol>
+<p>学习本教程要求你要有一定的Core Data使用基础。这里有一些 <a href="http://www.raywenderlich.com/115695/getting-started-with-core-data-tutorial" target="_blank" rel="external">Core Data</a> 资料供参考。</p>
+<p>###开始吧</p>
+<p>下载启始<a href="http://www.raywenderlich.com/106856/getting-started-magicalrecord" target="_blank" rel="external">工程</a>,并且双击 <strong>BeerTracker.xcworkspace</strong> 打开工程。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/05/Use-xcworkspace-file.png" alt=""></p>
+<p>运行程序，你会发现存在几个关于 MagicalRecord 的警告，这些警告可以暂时忽略。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/FirstRun-272x500.png" alt=""></p>
+<p>这个应用由一个带导航栏按钮的基本的导航控制器、列表、搜索框和一个控制排序的种类的分段控制器构成。点击“+”按钮显示一个添加啤酒信息的页面，但是目前这个程序并不能保存添加的数据。</p>
+<p>大致浏览一下整个工程，展开 <strong>Beertracker</strong> 下的 <strong>BeerTracker</strong> 文件夹。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/BeerTrackerTarget1.png" alt=""></p>
+<p>浏览一下你会发现， Core Data 模型存在但是却并未发现使用它的代码。通过本系列的教程，你将为这个工程添加一些功能，并借助于MagicalRecord 实现不添加Core Data 的框架代码而使用Core Data 模型。</p>
+<p>###探索<strong>MagicalRecord</strong></p>
+<p>在工程的导航标签页下，打开 <strong>Pods</strong> target 下的 <strong>Pods</strong> 文件夹,如图</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/PodsTarget.png" alt=""></p>
+<p>在 <em>Shorthand</em> 文件夹下，打开 <strong>NSManagedObjectModel+MagicalRecord.h.</strong> 文件。在这个文件夹下的方法名都被冠以 <strong>MR_</strong>. 这正是因为 MagicalRecord 是扩展了 Cord Data 类，这个命名空间能够保证不会和已经存在的方法名出现冲突。</p>
+<p>再次打开 <em>Shordhand</em> 文件夹，打开其下的 <em>Support Files</em> 文件夹下的 <em>Pods-BeerTracker-MagicalRecord-prefix.pch</em> 文件。这是整个工程的预编译头文件，其中有两行代码值得注意</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine MR_SHORTHAND <span class="number">0</span></span><br><span class="line"><span class="id">#import</span> “CoreData+MagicalRecord.h”</span><br></pre></td></tr></table></figure>
+<p>正是这两行代码可以让整个工程正确的使用 MagicalRecord：</p>
+<ol>
+<li>MR<em>SHORTHAND 会告诉 MagicalRecord 这个工程将不会使用前缀MR</em>。对于有兴趣研究这是怎么实现的童鞋，可以在 <em>MagicalRecord+ShorthandSupport.m</em> 中找到答案。</li>
+<li>导入 <em>CoreData+MagicalRecord.h</em> 使得可以使用MagicalRecord 中任何API。</li>
+</ol>
+<p>###实体类： Beer Model</p>
+<p>这时候就可以使用数据模型来追踪你最爱的啤酒了。为了使MagicalRecord中的数据模型类可以被 Objective-C代码访问，需要为 <strong>Beer.swift</strong> 中的类声明中添加下面一行代码</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="function"><span class="title">objc</span><span class="params">(Beer)</span></span></span><br></pre></td></tr></table></figure>
+<p>它带来的好处是可以使 Beer Model 可以兼容Objective-C 的runtime 和 Core Data。</p>
+<p>下一步，打开 <strong>BeerDetails.swift</strong> 执行和上一步相似的步骤，为BeerDetail 添加以下代码</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="function"><span class="title">objc</span><span class="params">(BeerDetails)</span></span></span><br></pre></td></tr></table></figure>
+<p>接下来，该初始化 Core Data Stack 了。打开 <em>Appdelegate.Swift</em> 找到 <strong>application(_:didFinishLaunchingWithOptions:)</strong> 方法，添加下面的一行代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MagicalRecord.<span class="function"><span class="title">setupCoreDataStackWithStoreNamed</span><span class="params">(<span class="string">"Beer"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>如果你之前使用 Core Data 开发过应用，应该知道配置这个stack需要多少代码，但是使用 MagicalRecord，所有工作只需要一行代码而已！</p>
+<p>MagicalRecord 提供了一些方法来配置 Core Data Stack，选用哪种方法取决于</p>
+<ul>
+<li>后台存储类型</li>
+<li>是否支持自动迁移</li>
+<li>Core Data Model是否和项目名称匹配</li>
+</ul>
+<p>MagicalRecord 中与之相应的便捷初始化方法如下：</p>
+<ul>
+<li>setupCoreDataStackWithInMemoryStore</li>
+<li>setupAutoMigratingCoreDataStack</li>
+<li>setupCoreDataStack</li>
+</ul>
+<p>如果数据模型和工程的名称一致（比如：模型文件名为: BeerTracker.xcdatamodeld 而工程的名字为 BeerTracker，这即是一致的。），这时你就可以使用上面列出的便捷方法。而在本教程中，模型文件名是和工程名不同的，所以应该通过下面两个方法指明存储名称：setupCoreDataStackWithStoreNamed(_:) </p>
+<p>setupCoreDataStackWithAutoMigratingSqliteStoreNamed(_:).</p>
+<p>一旦初始化了数据模型，Core Data 需要一些附加的代码来处理model发生的任何细微的变化。 有关<em>自动迁移</em>的初始化方法中，MagicalRecord将会处理由老的数据模型向新的数据模型迁移的工作，当然，前提是能够满足迁移的条件。</p>
+<p>编译并运行。应用的外观应该没有任何变化，所有的变化仅仅是集中在后台的数据存储中。</p>
+<h3 id="构造_Beer_实体">构造 Beer 实体</h3><p>截至目前，数据模型和 Core Data Stack 已经创建并初始化，现在就可以向列表中添加 beer 了。<br>打开 BeerDetailViewController.swift 文件并为类添加以下属性：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> cuurentBeer</span>: Beer!</span><br></pre></td></tr></table></figure>
+<p>这会使得 Beer 实体会被展示并持有。</p>
+<p>接下来在 viewDidLoad（） 方法中添加以下代码</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> beer = currentBeer &#123;</span><br><span class="line">	<span class="comment">// A beer exists.  EDIT Mode.</span></span><br><span class="line"> </span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">// A beer does NOT exist.  ADD Mode.</span></span><br><span class="line"> </span><br><span class="line">	currentBeer = Beer.createEntity() <span class="keyword">as</span>! Beer</span><br><span class="line">	currentBeer.name = <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> BeerDetailViewController的加载是由以下两个条件触发:</p>
+<ul>
+<li>用户选择了列表中的一项 - 编辑模式</li>
+<li><p>用户点击了 + 按钮 - 新增模式</p>
+<p>这段代码用来检查一个Beer对象是否被设置，这一定是在编辑模式下，如果没有设置，会创建并添加一个新的Beer对象。</p>
+</li>
+</ul>
+<p>接下来，做一些和实体详情有关的工作，在viewDidLoad（）：方法末尾添加以下代码</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">let</span> details: <span class="keyword">BeerDetails? </span>= currentBeer.<span class="keyword">beerDetails</span><br><span class="line"></span> </span><br><span class="line"><span class="label">if</span> let <span class="keyword">bDetails </span>= details &#123;</span><br><span class="line">  // <span class="keyword">Beer </span>Details exist.  EDIT Mode.</span><br><span class="line">&#125; <span class="preprocessor">else</span> &#123;</span><br><span class="line">  // <span class="keyword">Beer </span>Details do NOT exist.  Either <span class="keyword">ADD </span>Mode or EDIT Mode with a <span class="keyword">beer </span>that has no details.</span><br><span class="line"> </span><br><span class="line">  currentBeer.<span class="keyword">beerDetails </span>= <span class="keyword">BeerDetails.createEntity() </span>as! <span class="keyword">BeerDetails</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          临时数据存储和筛选--FMDB的学习和研究
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/29/CocoaPods使用注意事项/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CocoaPods使用注意事项</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="持久化存储解决方案MagicalRecord使用入门" data-title="持久化存储解决方案MagicalRecord使用入门" data-url="http://lynulzy.info/2015/10/12/持久化存储解决方案MagicalRecord使用入门/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"lynulzy"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+</article>
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 lynulzy
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

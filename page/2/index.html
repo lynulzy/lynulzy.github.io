@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 10px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 20px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,144 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-关于Runtime实际应用的疑惑" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/14/关于Runtime实际应用的疑惑/" class="article-date">
+  	<time datetime="2015-08-14T02:43:23.000Z" itemprop="datePublished">2015-08-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/14/关于Runtime实际应用的疑惑/">关于Runtime实际应用的疑惑</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。</p>
+<p>从这篇<a href="http://www.cocoachina.com/ios/20141008/9844.html" target="_blank" rel="external">文章</a>开始说起  </p>
+<p>介绍了Runtime的一些基础知识，基本概念。</p>
+<ul>
+<li>Objective-C对象在Runtime下转换成C的形式</li>
+<li>集成自NSObject类能在Runtime角度带来什么样的好处</li>
+<li>objc_msgSend方法执行过程</li>
+<li>消息转发（这个有使用场景）</li>
+</ul>
+<p>其中提到的一个场景<br>消息转发，在另一篇文章中也有详细的阐述，当obj_msgSend找不到类中对方法的实现的时候有三个入口可以手动的提供相应的实现方法，在<a href="http://www.cnblogs.com/biosli/p/NSObject_inherit_2.html" target="_blank" rel="external">这里</a>有详细阐述。</p>
+<p>针对Runtime的实际使用场景，我也找到另外一篇<a href="http://www.cnblogs.com/ludashi/p/4673935.html" target="_blank" rel="external">使用Runtime给Model类赋值</a></p>
+<h3 id="So_问题来了">So 问题来了</h3><p>在网上也找了一些资料，<strong><em>然而</em></strong>指明某种应用场景的很少，而自己对这方面的理解也并不深刻，希望有过使用经验的朋友能够分享一些使用Runtime的场景，或者某些关于Runtime的（黑魔法）。</p>
+<p>之后会在此整理一些好的经验，感谢各位<a href="http://www.v2ex.com/t/213151#reply0" target="_blank" rel="external">V友</a>！</p>
+<hr>
+<p><strong>PS:</strong> 在V站发帖后得到一些坛友的分享，总结如下</p>
+<h5 id="关于Runtime使用的总结"><em>关于Runtime使用的总结</em></h5><ol>
+<li>method </li>
+<li>swizzle</li>
+<li>多继承</li>
+<li>私有方法参数的获取和调用</li>
+</ol>
+<h5 id="资源"><em>资源</em></h5><p>1.基于Runtime的JSPatch库</p>
+<p>2.底层开发的书籍CFHipsterRef</p>
+<p>这将是自己对Runtime学习的方向，我会将应用到项目中的Runtime技能在博客中分享。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/涨姿势/">涨姿势</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
+  
+    <article id="post-上线发布检查清单（持续更新中）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/12/上线发布检查清单（持续更新中）/" class="article-date">
+  	<time datetime="2015-08-12T15:09:16.000Z" itemprop="datePublished">2015-08-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/12/上线发布检查清单（持续更新中）/">上线发布检查清单（持续更新中）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在打包发布的时候有许多需要注意的细节，比如三方SDK的状态设置，日志的输出，编译标志的设置，繁复的细节如果能维护一份清单，那么会对以后的上线工作有利，也可以避免不必要的时间浪费.</p>
+<ol>
+<li>应用更新功能是否可用</li>
+<li>用户协议的网址</li>
+<li>分享的连接是否可用</li>
+<li>提交的审核信息中帐号是否可用</li>
+<li>推送标记是否设置为发布模式。</li>
+<li>提交版本的时候需要把ipa保存一份，以确保.dsYM文件能够保存，出现bug可以查看崩溃日志。</li>
+<li>不要有log信息（important!）</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/上线-清单/">上线 清单</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
   
     <article id="post-开发笔记整理" class="article article-type-post" itemscope itemprop="blogPost">
   

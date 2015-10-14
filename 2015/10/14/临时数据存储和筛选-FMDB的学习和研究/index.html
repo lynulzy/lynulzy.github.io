@@ -3,36 +3,42 @@
 <head>
   <meta charset="utf-8">
   
-  <title>CocoaPods使用注意事项 | lynulzy的自留地</title>
+  <title>临时数据存储和筛选--FMDB的学习和研究 | lynulzy的自留地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="###问题的来源：
-前言
-地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。
-在项目中原先使用的是 AMapSearch + AMap2D ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 AMapSearch + AMapNavi 。
-问题描述完毕。
-###处理
-使用过CocoaPods的朋">
+  <meta name="description" content="笔记记录：
+
+创建sqlite时，传入一个 @”” 的地址则会在沙盒的临时目录下创建数据库，并且当数据断开链接时删除数据库文件
+
+援引
+
+Temporary Databases
+
+When the name of the database file handed to sqlite3_open() or to ATTACH is an empty string, then a new tempor">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CocoaPods使用注意事项">
-<meta property="og:url" content="http://lynulzy.info/2015/09/29/CocoaPods使用注意事项/index.html">
+<meta property="og:title" content="临时数据存储和筛选--FMDB的学习和研究">
+<meta property="og:url" content="http://lynulzy.info/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/index.html">
 <meta property="og:site_name" content="lynulzy的自留地">
-<meta property="og:description" content="###问题的来源：
-前言
-地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。
-在项目中原先使用的是 AMapSearch + AMap2D ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 AMapSearch + AMapNavi 。
-问题描述完毕。
-###处理
-使用过CocoaPods的朋">
-<meta property="og:updated_time" content="2015-09-29T02:15:33.000Z">
+<meta property="og:description" content="笔记记录：
+
+创建sqlite时，传入一个 @”” 的地址则会在沙盒的临时目录下创建数据库，并且当数据断开链接时删除数据库文件
+
+援引
+
+Temporary Databases
+
+When the name of the database file handed to sqlite3_open() or to ATTACH is an empty string, then a new tempor">
+<meta property="og:updated_time" content="2015-10-14T07:15:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CocoaPods使用注意事项">
-<meta name="twitter:description" content="###问题的来源：
-前言
-地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。
-在项目中原先使用的是 AMapSearch + AMap2D ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 AMapSearch + AMapNavi 。
-问题描述完毕。
-###处理
-使用过CocoaPods的朋">
+<meta name="twitter:title" content="临时数据存储和筛选--FMDB的学习和研究">
+<meta name="twitter:description" content="笔记记录：
+
+创建sqlite时，传入一个 @”” 的地址则会在沙盒的临时目录下创建数据库，并且当数据断开链接时删除数据库文件
+
+援引
+
+Temporary Databases
+
+When the name of the database file handed to sqlite3_open() or to ATTACH is an empty string, then a new tempor">
   
     <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
   
@@ -197,11 +203,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-CocoaPods使用注意事项" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-临时数据存储和筛选-FMDB的学习和研究" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/09/29/CocoaPods使用注意事项/" class="article-date">
-  	<time datetime="2015-09-29T01:26:20.000Z" itemprop="datePublished">2015-09-29</time>
+      <a href="/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/" class="article-date">
+  	<time datetime="2015-10-14T02:44:25.000Z" itemprop="datePublished">2015-10-14</time>
 </a>
     </div>
   
@@ -214,7 +220,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CocoaPods使用注意事项
+      临时数据存储和筛选--FMDB的学习和研究
     </h1>
   
 
@@ -222,10 +228,6 @@
       
       <div class="article-info article-info-post">
         
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CocoaPods/">CocoaPods</a></li></ul>
-	</div>
-
         
 
         <div class="clearfix"></div>
@@ -234,42 +236,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>###问题的来源：</p>
-<p>前言</p>
-<p>地图库高德地图 SDK 包含一系列的SDK，有2D、3D地图类的、搜索类的、导航类的、云图类的。</p>
-<p>在项目中原先使用的是 <code>AMapSearch + AMap2D</code> ，但是需要用到AMapNavi 中的路径规划功能，所以需要把冲突的库去掉，安装一个新的库，所以改变之后的库是 <code>AMapSearch + AMapNavi</code> 。</p>
-<p>问题描述完毕。</p>
-<p>###处理</p>
-<p>使用过CocoaPods的朋友知道，在CocoaPods 中添加一个库就是在<code>Podfile</code> 中添加一条记录，并执行 <em>pod install</em> 命令即可。但是在当前（2015-09）CocoaPods 版本稳定版本下 0.38.2 下CocoaPods 集成 AMapSearch 库会出现如下报错</p>
+        <p>笔记记录：</p>
+<ul>
+<li>创建sqlite时，传入一个 @”” 的地址则会在沙盒的临时目录下创建数据库，并且当数据断开链接时删除数据库文件</li>
+</ul>
+<p><a href="http://www.sqlite.org/inmemorydb.html" target="_blank" rel="external">援引</a></p>
 <blockquote>
-<p>Errno::ENOENT - No such file or directory AMapSearch/AMapSearchKit.framework/Resources</p>
-</blockquote>
-<p>在github上有相关的解决办法，并且有大神表示这是一个CocoaPods版本的bug，在之后的版本会消除。</p>
-<p>总结两种解决办法</p>
-<ol>
-<li>删除报错信息中的指定目录或者文件，然后执行 pod install即可；</li>
-<li>手动删除 workspace 下 Pods 中相关的文件，然后执行pod install.</li>
-</ol>
+<p>Temporary Databases</p>
 <blockquote>
-<p><em>关于手动删除Pods中的三方库</em></p>
-<blockquote>
-<p>pod install 中出现的错误信息，我们发现一个Pod的集成过程中有一步是向相关目录和文件中写入内容的。所以，删除引用可以从删除这些目录和文件中的三方库信息开始。</p>
-<ol>
-<li><strong>Pods</strong> 目录下 <strong>Manifest.lock</strong> 文件中删除AMapSearch行</li>
-<li><strong>Pods</strong> 目录下 删除 <strong>AMapSearch</strong> 目录，这个目录下是AMapSearch的framework文件。</li>
-<li><strong>Pods</strong> 目录下 <strong>Headers-&gt; Public</strong> 下删除 AMapSearch 目录及其文件</li>
-<li><strong>Pods</strong> 目录下 <strong>Target Support Files</strong> 目录中 AMapSearch目录及其文件。</li>
-</ol>
+<p>When the name of the database file handed to sqlite3_open() or to ATTACH is an empty string, then a new temporary file is created to hold the database.</p>
+<p>rc = sqlite3_open(“”, &amp;db);<br>ATTACH DATABASE ‘’ AS aux2;<br>A different temporary file is created each time, so that just like as with the special “:memory:” string, two database connections to temporary databases each have their own private database. Temporary databases are automatically deleted when the connection that created them closes.</p>
+<p>Even though a disk file is allocated for each temporary database, in practice the temporary database usually resides in the in-memory pager cache and hence is very little difference between a pure in-memory database created by “:memory:” and a temporary database created by an empty filename. The sole difference is that a “:memory:” database must remain in memory at all times whereas parts of a temporary database might be flushed to disk if database becomes large or if SQLite comes under memory pressure.</p>
 </blockquote>
 </blockquote>
-<p>过程中可能会一并出现一些关于版本控制的错误，具体的表现是在Xcode中有 <strong> 文件找不到，但实际上这些版本控制下的文件是与当前的工程无关的，清除的方法是在 Terminal 中进入相关文件的上层目录执行 *svn delete \</strong>.</p>
-<h3 id="延伸">延伸</h3><p>今天在看 CocoaPods 的 issue的时候发现cocoaPods是有相关的三方库解除工具的，可以参考<a href="https://github.com/CocoaPods/CocoaPods/issues/3382" target="_blank" rel="external">这个连接</a></p>
-<p>具体来讲就是安装一个名字是 cocoapods-deintegrate的工具，并在工程目录中执行 <em>pod deintegrate</em> 命令。 </p>
-<p>而这个命令的作用则是移除项目中集成的所有 cocoapods 。</p>
-<p>引用一下原文 </p>
-<blockquote>
-<p>A CocoaPods plugin to remove and deintegrate CocoaPods from your project. Removing all traces of CocoaPods from an Xcode project.</p>
-</blockquote>
+<p>PS : 临时数据库是存储在内存的页缓存中，如果数据库很小，那么和驻留在内存中的数据库没有差别，但是当数据库体积随之庞大，临时数据库会呗写入磁盘。</p>
+<ul>
+<li>数据库的创建和打开失败：资源不足或者权限不足</li>
+<li><strong><em>执行更新</em></strong>：1.除了<strong>SELECT</strong>语句之外的所有语句都是更新语句；2.更新语句的执行返回执行结果，成功为Bool的YES，反之为NO；3.失败时可以通过<code>-lastErrorMessage</code>方法或者 <code>-lastErrorCode</code>方法来获取更多信息。</li>
+<li><strong><em>执行查询</em></strong>：会返回一个<code>FMResultSet</code>类型的查询结果，保存筛选到的数据，返回nil时说明查询出错，可以在上述错误追踪方法中查看详情。</li>
+<li><strong><em>查询结果</em></strong>:在使用查询结果之前应该先调用 <code>FMResultSet</code>的 <code>next</code>方法，像这样</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FMResultSet *s = [db <span class="string">executeQuery:</span>@<span class="string">"SELECT COUNT(*) FROM myTable"</span>];</span><br><span class="line"><span class="keyword">if</span> ([s next]) &#123;</span><br><span class="line">    <span class="typename">int</span> totalCount = [s <span class="string">intForColumnIndex:</span><span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><em>查询结果</em></strong>:不用对此对象进行关闭操作，在数据库关闭或者对象超出其作用域的时候会自动的关闭</li>
+<li><strong><em>关闭数据库</em></strong> 当对数据库的操作执行完毕的时候需要手动的关闭数据库，调用 <code>-close</code> 方法</li>
+<li><strong><em>数据处理</em></strong> <code>-executeUpdate:</code>方法所接收的参数都是对象且必须是对象。</li>
+<li><strong><em>队列和线程安全性</em></strong> 在多线程环境下使用一个 <code>FMDatabase</code> 实例是不安全的，<strong>千万不要在多线程中共享同一个 FMDataBase 对象，多线程环境下使用FMDatabaseQueue会更好</strong></li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建队列</span></span><br><span class="line">FMDatabaseQueue *queue = [FMDatabaseQueue <span class="string">dadtabaseQueueWithPath:</span> aPath];</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用队列</span></span><br><span class="line">[queue <span class="string">inDatabase:</span>^(FMDatabase *db) &#123;</span><br><span class="line">	[db <span class="string">executeUpdate:</span>@<span class="string">"INSERT INTO myTable VALUES (?)"</span>, [NSNumber <span class="string">numberWithInt:</span><span class="number">1</span>]];</span><br><span class="line">    [db <span class="string">executeUpdate:</span>@<span class="string">"INSERT INTO myTable VALUES (?)"</span>, [NSNumber <span class="string">numberWithInt:</span><span class="number">2</span>]];</span><br><span class="line">    [db <span class="string">executeUpdate:</span>@<span class="string">"INSERT INTO myTable VALUES (?)"</span>, [NSNumber <span class="string">numberWithInt:</span><span class="number">3</span>]];</span><br><span class="line"></span><br><span class="line">    FMResultSet *rs = [db <span class="string">executeQuery:</span>@<span class="string">"select * from foo"</span>];</span><br><span class="line">    <span class="keyword">while</span> ([rs next]) &#123;</span><br><span class="line">        …</span><br><span class="line">    &#125;</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>queue的执行是顺序执行的，在多线程中添加的操作会以其先后顺序执行，这样在线程中互不依赖。</p>
 
       
     </div>
@@ -279,18 +274,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/10/12/持久化存储解决方案MagicalRecord使用入门/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          持久化存储解决方案MagicalRecord使用入门
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/21/IDE更新到-Xcode-7-0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">IDE更新到 Xcode 7.0</div>
+    <a href="/2015/10/12/持久化存储解决方案MagicalRecord使用入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">持久化存储解决方案MagicalRecord使用入门</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -317,7 +303,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="CocoaPods使用注意事项" data-title="CocoaPods使用注意事项" data-url="http://lynulzy.info/2015/09/29/CocoaPods使用注意事项/"></div>
+	<div class="ds-thread" data-thread-key="临时数据存储和筛选-FMDB的学习和研究" data-title="临时数据存储和筛选--FMDB的学习和研究" data-url="http://lynulzy.info/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

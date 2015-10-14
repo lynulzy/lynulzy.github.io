@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 10px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 20px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,206 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-临时数据存储和筛选-FMDB的学习和研究" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/" class="article-date">
+  	<time datetime="2015-10-14T02:44:25.000Z" itemprop="datePublished">2015-10-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/">临时数据存储和筛选--FMDB的学习和研究</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>笔记记录：</p>
+<ul>
+<li>创建sqlite时，传入一个 @”” 的地址则会在沙盒的临时目录下创建数据库，并且当数据断开链接时删除数据库文件</li>
+</ul>
+<p><a href="http://www.sqlite.org/inmemorydb.html" target="_blank" rel="external">援引</a></p>
+<blockquote>
+<p>Temporary Databases</p>
+<blockquote>
+<p>When the name of the database file handed to sqlite3_open() or to ATTACH is an empty string, then a new temporary file is created to hold the database.</p>
+<p>rc = sqlite3_open(“”, &amp;db);<br>ATTACH DATABASE ‘’ AS aux2;<br>A different temporary file is created each time, so that just like as with the special “:memory:” string, two database connections to temporary databases each have their own private database. Temporary databases are automatically deleted when the connection that created them closes.</p>
+<p>Even though a disk file is allocated for each temporary database, in practice the temporary database usually resides in the in-memory pager cache and hence is very little difference between a pure in-memory database created by “:memory:” and a temporary database created by an empty filename. The sole difference is that a “:memory:” database must remain in memory at all times whereas parts of a temporary database might be flushed to disk if database becomes large or if SQLite comes under memory pressure.</p>
+</blockquote>
+</blockquote>
+<p>PS : 临时数据库是存储在内存的页缓存中，如果数据库很小，那么和驻留在内存中的数据库没有差别，但是当数据库体积随之庞大，临时数据库会呗写入磁盘。</p>
+<ul>
+<li>数据库的创建和打开失败：资源不足或者权限不足</li>
+<li><strong><em>执行更新</em></strong>：1.除了<strong>SELECT</strong>语句之外的所有语句都是更新语句；2.更新语句的执行返回执行结果，成功为Bool的YES，反之为NO；3.失败时可以通过<code>-lastErrorMessage</code>方法或者 <code>-lastErrorCode</code>方法来获取更多信息。</li>
+<li><strong><em>执行查询</em></strong>：会返回一个<code>FMResultSet</code>类型的查询结果，保存筛选到的数据，返回nil时说明查询出错，可以在上述错误追踪方法中查看详情。</li>
+<li><strong><em>查询结果</em></strong>:在使用查询结果之前应该先调用 <code>FMResultSet</code>的 <code>next</code>方法，像这样</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FMResultSet *s = [db <span class="string">executeQuery:</span>@<span class="string">"SELECT COUNT(*) FROM myTable"</span>];</span><br><span class="line"><span class="keyword">if</span> ([s next]) &#123;</span><br><span class="line">    <span class="typename">int</span> totalCount = [s <span class="string">intForColumnIndex:</span><span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><em>查询结果</em></strong>:不用对此对象进行关闭操作，在数据库关闭或者对象超出其作用域的时候会自动的关闭</li>
+<li><strong><em>关闭数据库</em></strong> 当对数据库的操作执行完毕的时候需要手动的关闭数据库，调用 <code>-close</code> 方法</li>
+<li><strong><em>数据处理</em></strong> <code>-executeUpdate:</code>方法所接收的参数都是对象且必须是对象。</li>
+<li><strong><em>队列和线程安全性</em></strong> 在多线程环境下使用一个 <code>FMDatabase</code> 实例是不安全的，<strong>千万不要在多线程中共享同一个 FMDataBase 对象，多线程环境下使用FMDatabaseQueue会更好</strong></li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建队列</span></span><br><span class="line">FMDatabaseQueue *queue = [FMDatabaseQueue <span class="string">dadtabaseQueueWithPath:</span> aPath];</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用队列</span></span><br><span class="line">[queue <span class="string">inDatabase:</span>^(FMDatabase *db) &#123;</span><br><span class="line">	[db <span class="string">executeUpdate:</span>@<span class="string">"INSERT INTO myTable VALUES (?)"</span>, [NSNumber <span class="string">numberWithInt:</span><span class="number">1</span>]];</span><br><span class="line">    [db <span class="string">executeUpdate:</span>@<span class="string">"INSERT INTO myTable VALUES (?)"</span>, [NSNumber <span class="string">numberWithInt:</span><span class="number">2</span>]];</span><br><span class="line">    [db <span class="string">executeUpdate:</span>@<span class="string">"INSERT INTO myTable VALUES (?)"</span>, [NSNumber <span class="string">numberWithInt:</span><span class="number">3</span>]];</span><br><span class="line"></span><br><span class="line">    FMResultSet *rs = [db <span class="string">executeQuery:</span>@<span class="string">"select * from foo"</span>];</span><br><span class="line">    <span class="keyword">while</span> ([rs next]) &#123;</span><br><span class="line">        …</span><br><span class="line">    &#125;</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>queue的执行是顺序执行的，在多线程中添加的操作会以其先后顺序执行，这样在线程中互不依赖。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
+  
+    <article id="post-持久化存储解决方案MagicalRecord使用入门" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/12/持久化存储解决方案MagicalRecord使用入门/" class="article-date">
+  	<time datetime="2015-10-12T14:51:11.000Z" itemprop="datePublished">2015-10-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/12/持久化存储解决方案MagicalRecord使用入门/">持久化存储解决方案MagicalRecord使用入门</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>原文在<a href="http://www.raywenderlich.com/106856/getting-started-magicalrecord" target="_blank" rel="external">这里</a></p>
+<p>众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。</p>
+<p>即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，<a href="http://www.magicalpanda.com" target="_blank" rel="external">MagicalPanda</a>开源了一个针对 Core Data 的三方库 – <a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a>。 MagicalRecord 提供了便利的方法来创建那些使用Core Data 所必须的代码，诸如对 Core Data 的设置、查询、更新。它的设计灵感来源于德高望重的 <em>Active Record</em> 设计模式。</p>
+<p>本教程将让你快速上手 MagicalRecord： 你将创建一个应用来追踪你最喜爱的啤酒（或者其他类似的饮料），它将具备以下功能：</p>
+<ol>
+<li>添加啤酒</li>
+<li>评价啤酒</li>
+<li>评论某款啤酒</li>
+<li>为啤酒拍照</li>
+</ol>
+<p>学习本教程要求你要有一定的Core Data使用基础。这里有一些 <a href="http://www.raywenderlich.com/115695/getting-started-with-core-data-tutorial" target="_blank" rel="external">Core Data</a> 资料供参考。</p>
+<p>###开始吧</p>
+<p>下载启始<a href="http://www.raywenderlich.com/106856/getting-started-magicalrecord" target="_blank" rel="external">工程</a>,并且双击 <strong>BeerTracker.xcworkspace</strong> 打开工程。</p>
+<p><img src="http://cdn2.raywenderlich.com/wp-content/uploads/2015/05/Use-xcworkspace-file.png" alt=""></p>
+<p>运行程序，你会发现存在几个关于 MagicalRecord 的警告，这些警告可以暂时忽略。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/FirstRun-272x500.png" alt=""></p>
+<p>这个应用由一个带导航栏按钮的基本的导航控制器、列表、搜索框和一个控制排序的种类的分段控制器构成。点击“+”按钮显示一个添加啤酒信息的页面，但是目前这个程序并不能保存添加的数据。</p>
+<p>大致浏览一下整个工程，展开 <strong>Beertracker</strong> 下的 <strong>BeerTracker</strong> 文件夹。</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/BeerTrackerTarget1.png" alt=""></p>
+<p>浏览一下你会发现， Core Data 模型存在但是却并未发现使用它的代码。通过本系列的教程，你将为这个工程添加一些功能，并借助于MagicalRecord 实现不添加Core Data 的框架代码而使用Core Data 模型。</p>
+<p>###探索<strong>MagicalRecord</strong></p>
+<p>在工程的导航标签页下，打开 <strong>Pods</strong> target 下的 <strong>Pods</strong> 文件夹,如图</p>
+<p><img src="http://cdn3.raywenderlich.com/wp-content/uploads/2015/05/PodsTarget.png" alt=""></p>
+<p>在 <em>Shorthand</em> 文件夹下，打开 <strong>NSManagedObjectModel+MagicalRecord.h.</strong> 文件。在这个文件夹下的方法名都被冠以 <strong>MR_</strong>. 这正是因为 MagicalRecord 是扩展了 Cord Data 类，这个命名空间能够保证不会和已经存在的方法名出现冲突。</p>
+<p>再次打开 <em>Shordhand</em> 文件夹，打开其下的 <em>Support Files</em> 文件夹下的 <em>Pods-BeerTracker-MagicalRecord-prefix.pch</em> 文件。这是整个工程的预编译头文件，其中有两行代码值得注意</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine MR_SHORTHAND <span class="number">0</span></span><br><span class="line"><span class="id">#import</span> “CoreData+MagicalRecord.h”</span><br></pre></td></tr></table></figure>
+<p>正是这两行代码可以让整个工程正确的使用 MagicalRecord：</p>
+<ol>
+<li>MR<em>SHORTHAND 会告诉 MagicalRecord 这个工程将不会使用前缀MR</em>。对于有兴趣研究这是怎么实现的童鞋，可以在 <em>MagicalRecord+ShorthandSupport.m</em> 中找到答案。</li>
+<li>导入 <em>CoreData+MagicalRecord.h</em> 使得可以使用MagicalRecord 中任何API。</li>
+</ol>
+<p>###实体类： Beer Model</p>
+<p>这时候就可以使用数据模型来追踪你最爱的啤酒了。为了使MagicalRecord中的数据模型类可以被 Objective-C代码访问，需要为 <strong>Beer.swift</strong> 中的类声明中添加下面一行代码</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="function"><span class="title">objc</span><span class="params">(Beer)</span></span></span><br></pre></td></tr></table></figure>
+<p>它带来的好处是可以使 Beer Model 可以兼容Objective-C 的runtime 和 Core Data。</p>
+<p>下一步，打开 <strong>BeerDetails.swift</strong> 执行和上一步相似的步骤，为BeerDetail 添加以下代码</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="function"><span class="title">objc</span><span class="params">(BeerDetails)</span></span></span><br></pre></td></tr></table></figure>
+<p>接下来，该初始化 Core Data Stack 了。打开 <em>Appdelegate.Swift</em> 找到 <strong>application(_:didFinishLaunchingWithOptions:)</strong> 方法，添加下面的一行代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MagicalRecord.<span class="function"><span class="title">setupCoreDataStackWithStoreNamed</span><span class="params">(<span class="string">"Beer"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>如果你之前使用 Core Data 开发过应用，应该知道配置这个stack需要多少代码，但是使用 MagicalRecord，所有工作只需要一行代码而已！</p>
+<p>MagicalRecord 提供了一些方法来配置 Core Data Stack，选用哪种方法取决于</p>
+<ul>
+<li>后台存储类型</li>
+<li>是否支持自动迁移</li>
+<li>Core Data Model是否和项目名称匹配</li>
+</ul>
+<p>MagicalRecord 中与之相应的便捷初始化方法如下：</p>
+<ul>
+<li>setupCoreDataStackWithInMemoryStore</li>
+<li>setupAutoMigratingCoreDataStack</li>
+<li>setupCoreDataStack</li>
+</ul>
+<p>如果数据模型和工程的名称一致（比如：模型文件名为: BeerTracker.xcdatamodeld 而工程的名字为 BeerTracker，这即是一致的。），这时你就可以使用上面列出的便捷方法。而在本教程中，模型文件名是和工程名不同的，所以应该通过下面两个方法指明存储名称：setupCoreDataStackWithStoreNamed(_:) </p>
+<p>setupCoreDataStackWithAutoMigratingSqliteStoreNamed(_:).</p>
+<p>一旦初始化了数据模型，Core Data 需要一些附加的代码来处理model发生的任何细微的变化。 有关<em>自动迁移</em>的初始化方法中，MagicalRecord将会处理由老的数据模型向新的数据模型迁移的工作，当然，前提是能够满足迁移的条件。</p>
+<p>编译并运行。应用的外观应该没有任何变化，所有的变化仅仅是集中在后台的数据存储中。</p>
+<h3 id="构造_Beer_实体">构造 Beer 实体</h3><p>截至目前，数据模型和 Core Data Stack 已经创建并初始化，现在就可以向列表中添加 beer 了。<br>打开 BeerDetailViewController.swift 文件并为类添加以下属性：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> cuurentBeer</span>: Beer!</span><br></pre></td></tr></table></figure>
+<p>这会使得 Beer 实体会被展示并持有。</p>
+<p>接下来在 viewDidLoad（） 方法中添加以下代码</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> beer = currentBeer &#123;</span><br><span class="line">	<span class="comment">// A beer exists.  EDIT Mode.</span></span><br><span class="line"> </span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">// A beer does NOT exist.  ADD Mode.</span></span><br><span class="line"> </span><br><span class="line">	currentBeer = Beer.createEntity() <span class="keyword">as</span>! Beer</span><br><span class="line">	currentBeer.name = <span class="string">""</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> BeerDetailViewController的加载是由以下两个条件触发:</p>
+<ul>
+<li>用户选择了列表中的一项 - 编辑模式</li>
+<li><p>用户点击了 + 按钮 - 新增模式</p>
+<p>这段代码用来检查一个Beer对象是否被设置，这一定是在编辑模式下，如果没有设置，会创建并添加一个新的Beer对象。</p>
+</li>
+</ul>
+<p>接下来，做一些和实体详情有关的工作，在viewDidLoad（）：方法末尾添加以下代码</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">let</span> details: <span class="keyword">BeerDetails? </span>= currentBeer.<span class="keyword">beerDetails</span><br><span class="line"></span> </span><br><span class="line"><span class="label">if</span> let <span class="keyword">bDetails </span>= details &#123;</span><br><span class="line">  // <span class="keyword">Beer </span>Details exist.  EDIT Mode.</span><br><span class="line">&#125; <span class="preprocessor">else</span> &#123;</span><br><span class="line">  // <span class="keyword">Beer </span>Details do NOT exist.  Either <span class="keyword">ADD </span>Mode or EDIT Mode with a <span class="keyword">beer </span>that has no details.</span><br><span class="line"> </span><br><span class="line">  currentBeer.<span class="keyword">beerDetails </span>= <span class="keyword">BeerDetails.createEntity() </span>as! <span class="keyword">BeerDetails</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/持久化存储/">持久化存储</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
   
     <article id="post-CocoaPods使用注意事项" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -858,144 +1058,6 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面试、整理/">面试、整理</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-
-
-
-</article>
-
-
-  
-    <article id="post-关于Runtime实际应用的疑惑" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/08/14/关于Runtime实际应用的疑惑/" class="article-date">
-  	<time datetime="2015-08-14T02:43:23.000Z" itemprop="datePublished">2015-08-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/14/关于Runtime实际应用的疑惑/">关于Runtime实际应用的疑惑</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。</p>
-<p>从这篇<a href="http://www.cocoachina.com/ios/20141008/9844.html" target="_blank" rel="external">文章</a>开始说起  </p>
-<p>介绍了Runtime的一些基础知识，基本概念。</p>
-<ul>
-<li>Objective-C对象在Runtime下转换成C的形式</li>
-<li>集成自NSObject类能在Runtime角度带来什么样的好处</li>
-<li>objc_msgSend方法执行过程</li>
-<li>消息转发（这个有使用场景）</li>
-</ul>
-<p>其中提到的一个场景<br>消息转发，在另一篇文章中也有详细的阐述，当obj_msgSend找不到类中对方法的实现的时候有三个入口可以手动的提供相应的实现方法，在<a href="http://www.cnblogs.com/biosli/p/NSObject_inherit_2.html" target="_blank" rel="external">这里</a>有详细阐述。</p>
-<p>针对Runtime的实际使用场景，我也找到另外一篇<a href="http://www.cnblogs.com/ludashi/p/4673935.html" target="_blank" rel="external">使用Runtime给Model类赋值</a></p>
-<h3 id="So_问题来了">So 问题来了</h3><p>在网上也找了一些资料，<strong><em>然而</em></strong>指明某种应用场景的很少，而自己对这方面的理解也并不深刻，希望有过使用经验的朋友能够分享一些使用Runtime的场景，或者某些关于Runtime的（黑魔法）。</p>
-<p>之后会在此整理一些好的经验，感谢各位<a href="http://www.v2ex.com/t/213151#reply0" target="_blank" rel="external">V友</a>！</p>
-<hr>
-<p><strong>PS:</strong> 在V站发帖后得到一些坛友的分享，总结如下</p>
-<h5 id="关于Runtime使用的总结"><em>关于Runtime使用的总结</em></h5><ol>
-<li>method </li>
-<li>swizzle</li>
-<li>多继承</li>
-<li>私有方法参数的获取和调用</li>
-</ol>
-<h5 id="资源"><em>资源</em></h5><p>1.基于Runtime的JSPatch库</p>
-<p>2.底层开发的书籍CFHipsterRef</p>
-<p>这将是自己对Runtime学习的方向，我会将应用到项目中的Runtime技能在博客中分享。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/涨姿势/">涨姿势</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-
-
-
-</article>
-
-
-  
-    <article id="post-上线发布检查清单（持续更新中）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/08/12/上线发布检查清单（持续更新中）/" class="article-date">
-  	<time datetime="2015-08-12T15:09:16.000Z" itemprop="datePublished">2015-08-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/12/上线发布检查清单（持续更新中）/">上线发布检查清单（持续更新中）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在打包发布的时候有许多需要注意的细节，比如三方SDK的状态设置，日志的输出，编译标志的设置，繁复的细节如果能维护一份清单，那么会对以后的上线工作有利，也可以避免不必要的时间浪费.</p>
-<ol>
-<li>应用更新功能是否可用</li>
-<li>用户协议的网址</li>
-<li>分享的连接是否可用</li>
-<li>提交的审核信息中帐号是否可用</li>
-<li>推送标记是否设置为发布模式。</li>
-<li>提交版本的时候需要把ipa保存一份，以确保.dsYM文件能够保存，出现bug可以查看崩溃日志。</li>
-<li>不要有log信息（important!）</li>
-</ol>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/上线-清单/">上线 清单</a></li></ul>
 	</div>
 
       
