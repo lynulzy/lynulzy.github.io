@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Parse 停止运营的看法 | lynulzy的自留地</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="###Parse作为后台终究是一个最差方案原文翻译自Jameson Quave的Your Parse backend was always a bad idea.
+可能你还没听说Parse，这个前不久刚被Facebook收购的后台即服务（BaaS），现在Facebook正准备关闭这项服务。许多开发者听到这个消息不免赶到些许失落，甚至有的感觉被Facebook出卖了。我发布了这样的一条推特，这是一些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Parse 停止运营的看法">
+<meta property="og:url" content="http://lynulzy.info/2016/02/18/Parse-停止运营的看法/index.html">
+<meta property="og:site_name" content="lynulzy的自留地">
+<meta property="og:description" content="###Parse作为后台终究是一个最差方案原文翻译自Jameson Quave的Your Parse backend was always a bad idea.
+可能你还没听说Parse，这个前不久刚被Facebook收购的后台即服务（BaaS），现在Facebook正准备关闭这项服务。许多开发者听到这个消息不免赶到些许失落，甚至有的感觉被Facebook出卖了。我发布了这样的一条推特，这是一些">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/77cf5fafjw1f12bzvtulfj20hu0lhtao.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/77cf5fafgw1f12gjrimb9j20e505ndgd.jpg">
+<meta property="og:image" content="http://chart.finance.yahoo.com/z?s=ZNGA&t=5y&q=l&l=on&z=s&p=m50,m200">
+<meta property="og:updated_time" content="2016-02-18T02:06:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Parse 停止运营的看法">
+<meta name="twitter:description" content="###Parse作为后台终究是一个最差方案原文翻译自Jameson Quave的Your Parse backend was always a bad idea.
+可能你还没听说Parse，这个前不久刚被Facebook收购的后台即服务（BaaS），现在Facebook正准备关闭这项服务。许多开发者听到这个消息不免赶到些许失落，甚至有的感觉被Facebook出卖了。我发布了这样的一条推特，这是一些">
+  
+    <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://ww2.sinaimg.cn/large/77cf5fafgw1eulye2rw5wj20by0g1q41.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">lynulzy</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">说点什么</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/lynulzy" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/u/2010079151" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 20px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://cnfeat.com">cnfeat的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://litten.github.io">litten的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我的博客正在调试...</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">lynulzy</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://ww2.sinaimg.cn/large/77cf5fafgw1eulye2rw5wj20by0g1q41.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">lynulzy</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">说点什么</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/lynulzy" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/2010079151" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Parse-停止运营的看法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/18/Parse-停止运营的看法/" class="article-date">
+  	<time datetime="2016-02-18T02:01:18.000Z" itemprop="datePublished">2016-02-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Parse 停止运营的看法
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###Parse作为后台终究是一个最差方案<br><em>原文翻译自<a href="https://twitter.com/jquave" target="_blank" rel="external">Jameson Quave</a>的<a href="http://jamesonquave.com/blog/your-parse-backend-was-always-a-bad-idea/" target="_blank" rel="external">Your Parse backend was always a bad idea.</a></em></p>
+<p>可能你还没听说Parse，这个前不久刚被Facebook收购的<em>后台即服务</em>（BaaS），现在Facebook正准备关闭这项服务。许多开发者听到这个消息不免赶到些许失落，甚至有的感觉被Facebook出卖了。我发布了这样的一条推特，这是一些开发者在Parse关闭前的主页上的留言，差不多是这样的：</p>
+<p><img src="http://ww2.sinaimg.cn/large/77cf5fafjw1f12bzvtulfj20hu0lhtao.jpg" alt=""></p>
+<p>我不必添加着重符号，它已经被很好的标识出来：众多的开发者<strong>“信任我们”</strong>. 你可以从他们图片上所表达的内容上能够感受到，为什么开发者有如此强烈的被背叛的感觉。为何还会有人在知道任何一项技术都可能面临着随时被关闭的风险而继续使用Facebook提供的诸如React Native， React JS， HHVM， Relay这些技术？</p>
+<p>诚然，会有一些开源机构和团体可以接管这些服务，但是开源项目所需要维护者和企业资助者将会是一笔巨大的投入。Facebook已经用事实证明它是值得我们信任的，这对于在过去一直使用Facebook提供的API或者使用三方社交媒体API的开发者来讲并不值得惊讶。我稍候会讨论这个问题，但是让我们换个话题，来认识一下另一个被大家忽视的问题–Twitter以及着重的来谈谈Twitter 的 Fabric服务，这个目前拥有crash分析并且通过Felix Krause集成了众多令人惊叹的功能。</p>
+<p>但是为了了解Twitter过去如何对待它的开发团队，我们应该谈谈一个叫做Meerkat的小应用。因为和这个故事有相似的经历，我们之后会再回过头来讨论Parse和FaceBook，所以请暂时容忍我一下。</p>
+<p>####Meerkat</p>
+<p>简略的背景：我生活在Austin，这就意味着每年的SXSW大会我都会对一些之后会得到巨大发展的新兴的项目有一个近距离的了解。 Twitter, Foursquare, GameSalad, 甚至于 Four-Hour Work Week 这样的公司都会在大会上亮相。这是一些已经获得一些成功的例子，但是每年都会有更多的瞪大了眼睛的创始人出现在Austin来展示他们的业务并希望借助大会上的人们能使项目得到推广。2015年的SXSW大会上毫无争议的胜者就是Meerkat。</p>
+<p>Meerkat从根本上来说是一个实况直播的P2P平台，提供服务给那些直接由他们的iPhone向其他用户直播的人，而且它在SXSW上掀起了一阵风暴。去年在Austin的SXSW大会上行走一番你会发现Meerkat的广告T恤到处可见。每个人都在流媒体直播音乐，SXSW会议，他们的午餐，甚至于任何他们正在做的事情。但是，突然间…它停止运营了，官方给出了一个非常具体的原因：</p>
+<p><em>在Meerkat当前的运营情况下，Twitter突然收回了API访问权限以及一个两小时的通知</em></p>
+<p>如果你熟悉iOS App Store的流程，你就会了解这是一个什么样的问题，试想Meerkat的使用者们无论如何可以重写整个app而不依赖于Twitter的API，但他们却不能使这个app通过审核并在两个小时内上架到AppStore，实际上这项工作所花费的时间至少是3周这样。</p>
+<blockquote>
+<p>At the height of Meerkat’s launch, Twitter yanked API access right out from under their feet with only 2 hours notice.</p>
+</blockquote>
+<p>于我个人而言，我并没有赶到出乎意料，但是很多人想知道为什么Twitter会采取这样的行动，难道他们违反了API使用条款？或者他们那里不合法？</p>
+<p>然而，事实并不是这样…</p>
+<p>事实上它揭示了Twitter决定遏制住这个基于Twitter的最成功的app在未来几年的发展的原因正是他们自身也有在这个渠道中的竞争对手，叫做Periscope，这个我不愿给出连接的服务。</p>
+<p>所以在这里，Twitter再一次地<a href="https://gigaom.com/2014/09/30/twitter-to-developers-seriously-this-time-you-can-totally-trust-us-not-to-ambush-you/" target="_blank" rel="external">博取了开发团体的信任</a>。令人扼腕…</p>
+<p>####Parse</p>
+<p>看吧，说过我们会回到Parse的话题。</p>
+<p>Twitter和Facebook的行为从根本上可以说是同一个代表社交媒体的硬币的两面。对于我而言，相信他们中的任何一方都会有相同的教育意义。当我思考到一个科技公司将会在未来的道路上如何发展，我会想起这个信条 “一切朝钱看”。这通常会告诉你一个大型的公司在未来如何运转良好，尤其是那些面向公众的企业（FB和TWTR都是面向公众的）。美国公共企业对其股东的季度财报报告，有时会对他们的客户及合作伙伴造成伤害。当我注意到Parse的”免费分层“的巨大门槛时，着实令我有些担忧。对我而言，99%甚至更多的app将不能顺利通过这个门槛，如果他们通过了这个门槛也将付出几分的代价。当这个项目变成Facebook的开发者工具的时候我们不禁会问，他们的动机是什么尤其是在后端即服务方向？我认为答案很简单：<strong>他们想要你的数据，但事实证明这并没什么用处。</strong> 所以他们不再让Parse浪费他们的时间。面向众多的开发者通过提够免费的后端服务并不能给他们带来利润；所以他们叫停了这项服务。用Facebook官方的话来说就是：</p>
+<blockquote>
+<p>很荣幸我们为大家创造伟大app提供了帮助，但是我们需要把资源用在其他地方。</p>
+</blockquote>
+<p>翻译过来讲就是：你们没有让我们赚到钱。</p>
+<p>Facebook从广告中产生了它的底线，就像Twitter，像Google这个超越了苹果公司成为了当今世界最有价值的公司。事实上，只有一个供应商不把广告作为其营收的主要来源，它就是苹果。</p>
+<p>####一切朝钱看</p>
+<p>今天的早间时候我发布了这样一条推特：</p>
+<p><img src="http://ww3.sinaimg.cn/large/77cf5fafgw1f12gjrimb9j20e505ndgd.jpg" alt=""></p>
+<p>诚然，你确实不能盲目的信任这些社交媒体公司提供的后端服务。你必须找到以赚钱为目的这种动机的主体。如果他们的动机不是为你提供优质的服务来满足他们的基本营收的，那么让它坚持很长时间是不可能的。如果你是创始人或者CEO，这也正是一个分析你自己所从事的业务的好思路。你和任何人一起工作的时候你必须要确认他们的金钱方面的动机要和你的吻合，否则终究会打破你们的合作。这适用于员工， 联合创始人，合作伙伴，以及供应商。</p>
+<p>####Facebook提供的接口</p>
+<p>在Facebook提供API的早期，你可以很方便的获取到用户的联系人。这也正是为何从Facebook游戏以及Farmville的崛起中产生了大量的垃圾邮件。但是Facebook判断他们不希望这样，所以他们收回了这项权限，这对许多应用造成了损害，并且影响了Zynga的股票，可以仔细的看下对Zynga股票所产生的影响。<br><img src="http://chart.finance.yahoo.com/z?s=ZNGA&amp;t=5y&amp;q=l&amp;l=on&amp;z=s&amp;p=m50,m200" alt=""></p>
+<p>如果你的业务取决于一个应用，那么你的<strong>后端则是一个极其重要的而且你必须绝对控制的业务集合。</strong> 像Salesforce以及其他基于云服务的企业大概花费了十年时间来探索出走向一个大型企业的道路，即使到今天，他们中的大多数仍在使用在线托管版本的软件。究其原因就在于一个运行良好的业务你必须把一切都视为关键任务。这会增加维护成本以及初始化部署的成本，但是没有这些控制你的业务数据将被一些突发奇想的可疑人挖掘来服务于广告。这难道不是你自己控制服务器的原因？你对Facebook、Twitter和Google的信任又能价值几何？</p>
+<p>####构建自己的后端</p>
+<p>为你的应用提供稳定的后端服务的不二法门就是自己控制后端。我知道这听起来有些困难，但是这对于Ruby和NodeJS来讲做一个简单的API来驱动你的应用并不是什么难事儿。坦率的讲，Parse后端通过自身的基于javascript事件的机制，并不是和快速的写一个NodeJS应用、为一些简单的API抓取一些节点模块、通过MongoDB数据库来打包所有东西有太大的差别。如果这听起来真的有些困难，那么花费一些时间来学习一下在线教程吧，你就会了解到所有这些自己做起来也并不是太困难。或者你可以雇佣我的公司来做这例行的<strong>无休止的嵌入</strong>的工作。</p>
+<p>如果你真的雇佣了一个供应商来构建你自己的后端，确保你能得到源代码，以及在任何服务器上加载的必要工具。Docker是一个不错的方法来把所有应用所需要的环境打包起来的工具，而且像Heroku这样的服务会是发布Rails应用变得简单。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">临时数据存储和筛选--FMDB的学习和研究</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Parse-停止运营的看法" data-title="Parse 停止运营的看法" data-url="http://lynulzy.info/2016/02/18/Parse-停止运营的看法/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"lynulzy"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+</article>
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 lynulzy
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
