@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 20px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/runtime/" style="font-size: 10px;">runtime</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 20px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,118 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-AFNetwork部分文档" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/21/AFNetwork部分文档/" class="article-date">
+  	<time datetime="2015-08-21T01:05:27.000Z" itemprop="datePublished">2015-08-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/21/AFNetwork部分文档/">AFNetwork文档学习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>准备在项目中使用AFNetworking作为网络请求库，使用之前多看看，赶感觉生活更美好</p>
+<p>##NSURLConnection</p>
+<p>主要功能包含请求创建、响应结果序列化、网络状态检测、安全性、所有请求操作的管理。</p>
+<ul>
+<li><em>子类化注意事项</em></li>
+</ul>
+<p>对于 iOS7 以后，如果有大量的针对网络请求的鼓励使用 <code>AFHTTPSessionManger</code>的子类。这个子类应该提供单例类方法，这样关于请求的认证和一些其他的设置就可以在项目中全局化共享。</p>
+<ul>
+<li><em>需要重写的方法</em></li>
+</ul>
+<p>为了改变所有请求的功能，需要重载 <code>HTTPRequestOperationWithRequest:success:failure</code>方法。</p>
+<ul>
+<li><em>监测网络状况</em></li>
+</ul>
+<p>网络状况的改变可以通过 <code>reachabilityManager</code> 属性监测，这样可以阻塞或者挂起某些请求。</p>
+<hr>
+<p>##NSURLSession</p>
+<p><code>AFURLSessionManager</code>创建并管理由 <code>NSURLSessionConfiguration</code> 设置过的 <code>NSURLSession</code>对象。该对象遵循<code>&lt;NSURLSessionDataDelegate&gt;</code>,<br><code>&lt;NSURLSessionDownloadDelegate&gt;</code>,<br><code>&lt;NSURLSessionDelegate&gt;</code>协议</p>
+<ul>
+<li><em>子类化注意事项</em></li>
+</ul>
+<p>这个类是AFHTTPSessionManager的基类，<code>AFHTTPSessionManager</code>的优点在于优化了HTTP请求，如果想要扩展关于HTTP请求，请对AFHTTPSessionManager子类化。</p>
+<ul>
+<li><em>实现的代理方法</em></li>
+</ul>
+<h3 id="NSURLSessionDelegate"><code>NSURLSessionDelegate</code></h3><ul>
+<li><code>URLSession:didBecomeInvalidWithError:</code></li>
+<li><code>URLSession:didReceiveChallenge:completionHandler:</code></li>
+<li><code>URLSessionDidFinishEventsForBackgroundURLSession:</code></li>
+</ul>
+<h3 id="NSURLSessionTaskDelegate"><code>NSURLSessionTaskDelegate</code></h3><ul>
+<li><code>URLSession:willPerformHTTPRedirection:newRequest:completionHandler:</code></li>
+<li><code>URLSession:task:didReceiveChallenge:completionHandler:</code></li>
+<li><code>URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:</code></li>
+<li><code>URLSession:task:didCompleteWithError:</code></li>
+</ul>
+<h3 id="NSURLSessionDataDelegate"><code>NSURLSessionDataDelegate</code></h3><ul>
+<li><code>URLSession:dataTask:didReceiveResponse:completionHandler:</code></li>
+<li><code>URLSession:dataTask:didBecomeDownloadTask:</code></li>
+<li><code>URLSession:dataTask:didReceiveData:</code></li>
+<li><code>URLSession:dataTask:willCacheResponse:completionHandler:</code></li>
+</ul>
+<h3 id="NSURLSessionDownloadDelegate"><code>NSURLSessionDownloadDelegate</code></h3><ul>
+<li><code>URLSession:downloadTask:didFinishDownloadingToURL:</code></li>
+<li><code>URLSession:downloadTask:didWriteData:totalBytesWritten:totalBytesWritten:totalBytesExpectedToWrite:</code></li>
+<li><code>URLSession:downloadTask:didResumeAtOffset:expectedTotalBytes:</code> </li>
+</ul>
+<p><strong>如果子类中有任何需要重载代理方法的，必须首先调用父类的代理方法的实现</strong></p>
+<hr>
+<h2 id="附">附</h2><h3 id="NSURLSession">NSURLSession</h3><p>此API用来通过HTTP协议下载内容，提供了大量的代理方法来提供认证功能，使应用能够在后台或者当应用挂起的时候下载任务。</p>
+<p>通过NSURLSession的API，应用创建了一系列的会话，每个都协调着一组相关的数据传输任务。比如，如果你在实现一个浏览器，那么应用会为每个标签或者窗口创建一个sesssion.每个session都会添加一系列的任务，每个任务都代表向一个特定的URL的网络请求。</p>
+<p>一个会话的行为有一个设置对象决定，因为这里有三种类型的设置对象，所以相应的就有三种session对象。a.默认的与NSURLConnection很像，代表着session对象不缓存任何内容；b.download session把结果存储到一个文件中，并且当应用挂起、退出、甚至崩溃的时候持续性传输。</p>
+<p>通过这些session对象，你可以调度三种类型的任务，数据存储在内存中的，下载到磁盘上的，将磁盘上的文件上传并接收响应的任务。</p>
+<p>与其他网络API类似，NSURLSession也是异步的，它的数据返回有两种方式，当然，这取决于你调用了哪个方法:</p>
+<ul>
+<li>请求完成时的block，请求成功或者失败的时候通过block把数据返回到应用。</li>
+<li>接收到数据的时候调用自定义的代理方法。</li>
+<li>下载文件的时候调用自定义的代理方法。</li>
+</ul>
+<hr>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文档、三方库/">文档、三方库</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+
+
+</article>
+
+
   
     <article id="post-面试题整理" class="article article-type-post" itemscope itemprop="blogPost">
   

@@ -3,30 +3,42 @@
 <head>
   <meta charset="utf-8">
   
-  <title>关于Runtime实际应用的疑惑 | lynulzy的自留地</title>
+  <title>_objc_msgForward的学习 | lynulzy的自留地</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。
-从这篇文章开始说起  
-介绍了Runtime的一些基础知识，基本概念。
+  <meta name="description" content="##_objc_msgForward方法学习
+###消息转发的过程
+当发送给对象的消息找不到IMP（即方法的实现的时候会有三次机会补救）&amp;gt;
 
-Objective-C对象在Runti">
+step1.resolveInstanceMethod:
+setp2.forwardingTargetForSelector:
+step3. methodSignatureForSelector:
+   结果：
+a. forwardInvocation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于Runtime实际应用的疑惑">
-<meta property="og:url" content="http://lynulzy.info/2015/08/14/关于Runtime实际应用的疑惑/index.html">
+<meta property="og:title" content="_objc_msgForward的学习">
+<meta property="og:url" content="http://lynulzy.info/2016/02/20/objc-msgForward的学习/index.html">
 <meta property="og:site_name" content="lynulzy的自留地">
-<meta property="og:description" content="Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。
-从这篇文章开始说起  
-介绍了Runtime的一些基础知识，基本概念。
+<meta property="og:description" content="##_objc_msgForward方法学习
+###消息转发的过程
+当发送给对象的消息找不到IMP（即方法的实现的时候会有三次机会补救）&amp;gt;
 
-Objective-C对象在Runti">
-<meta property="og:updated_time" content="2015-08-16T08:26:08.000Z">
+step1.resolveInstanceMethod:
+setp2.forwardingTargetForSelector:
+step3. methodSignatureForSelector:
+   结果：
+a. forwardInvocation">
+<meta property="og:updated_time" content="2016-02-20T07:32:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于Runtime实际应用的疑惑">
-<meta name="twitter:description" content="Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。
-从这篇文章开始说起  
-介绍了Runtime的一些基础知识，基本概念。
+<meta name="twitter:title" content="_objc_msgForward的学习">
+<meta name="twitter:description" content="##_objc_msgForward方法学习
+###消息转发的过程
+当发送给对象的消息找不到IMP（即方法的实现的时候会有三次机会补救）&amp;gt;
 
-Objective-C对象在Runti">
+step1.resolveInstanceMethod:
+setp2.forwardingTargetForSelector:
+step3. methodSignatureForSelector:
+   结果：
+a. forwardInvocation">
   
     <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
   
@@ -191,11 +203,11 @@ Objective-C对象在Runti">
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-关于Runtime实际应用的疑惑" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-objc-msgForward的学习" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/08/14/关于Runtime实际应用的疑惑/" class="article-date">
-  	<time datetime="2015-08-14T02:43:23.000Z" itemprop="datePublished">2015-08-14</time>
+      <a href="/2016/02/20/objc-msgForward的学习/" class="article-date">
+  	<time datetime="2016-02-20T07:29:41.000Z" itemprop="datePublished">2016-02-20</time>
 </a>
     </div>
   
@@ -208,7 +220,7 @@ Objective-C对象在Runti">
         
   
     <h1 class="article-title" itemprop="name">
-      关于Runtime实际应用的疑惑
+      _objc_msgForward的学习
     </h1>
   
 
@@ -217,7 +229,7 @@ Objective-C对象在Runti">
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/涨姿势/">涨姿势</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/runtime/">runtime</a></li></ul>
 	</div>
 
         
@@ -228,30 +240,66 @@ Objective-C对象在Runti">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Runtime 这个话题从来都是中高级iOS开发者面试的必问题目，有互联网基因的公司都会比较重视面试者相关知识的掌握程度，这也是本猿面试多家互联网公司得到的经验（准确的说是教训），然而事实是在日常开发工作中并没有用到太多，在了解到一些Runtime的牛逼之处之后，觉得应该有很广的应用。</p>
-<p>从这篇<a href="http://www.cocoachina.com/ios/20141008/9844.html" target="_blank" rel="external">文章</a>开始说起  </p>
-<p>介绍了Runtime的一些基础知识，基本概念。</p>
+        <p>##_objc_msgForward方法学习</p>
+<p>###消息转发的过程</p>
+<p>当发送给对象的消息找不到IMP（即方法的实现的时候会有三次机会补救）<br>&gt;</p>
 <ul>
-<li>Objective-C对象在Runtime下转换成C的形式</li>
-<li>集成自NSObject类能在Runtime角度带来什么样的好处</li>
-<li>objc_msgSend方法执行过程</li>
-<li>消息转发（这个有使用场景）</li>
+<li>step1.resolveInstanceMethod:</li>
+<li>setp2.forwardingTargetForSelector:</li>
+<li><p>step3. methodSignatureForSelector:</p>
+<p>   结果：</p>
+<pre><code><span class="tag">a</span>. forwardInvocation:
+<span class="tag">b</span>. doesNotRecognizeSelector:
+</code></pre></li>
 </ul>
-<p>其中提到的一个场景<br>消息转发，在另一篇文章中也有详细的阐述，当obj_msgSend找不到类中对方法的实现的时候有三个入口可以手动的提供相应的实现方法，在<a href="http://www.cnblogs.com/biosli/p/NSObject_inherit_2.html" target="_blank" rel="external">这里</a>有详细阐述。</p>
-<p>针对Runtime的实际使用场景，我也找到另外一篇<a href="http://www.cnblogs.com/ludashi/p/4673935.html" target="_blank" rel="external">使用Runtime给Model类赋值</a></p>
-<h3 id="So_问题来了">So 问题来了</h3><p>在网上也找了一些资料，<strong><em>然而</em></strong>指明某种应用场景的很少，而自己对这方面的理解也并不深刻，希望有过使用经验的朋友能够分享一些使用Runtime的场景，或者某些关于Runtime的（黑魔法）。</p>
-<p>之后会在此整理一些好的经验，感谢各位<a href="http://www.v2ex.com/t/213151#reply0" target="_blank" rel="external">V友</a>！</p>
 <hr>
-<p><strong>PS:</strong> 在V站发帖后得到一些坛友的分享，总结如下</p>
-<h5 id="关于Runtime使用的总结"><em>关于Runtime使用的总结</em></h5><ol>
-<li>method </li>
-<li>swizzle</li>
-<li>多继承</li>
-<li>私有方法参数的获取和调用</li>
+<p>解释：</p>
+<ol>
+<li><p>方法<strong>resolveInstanceMethod</strong> </p>
+<p> 作用：Dynamically provides an implementation for a given selector for an instance method.<br> 当返回值是YES的时候意味着方法被找到并且添加到该类的方法缓存列表中，否则返回YES</p>
+<p> 添加方法使用 class_addMethod 函数</p>
+</li>
 </ol>
-<h5 id="资源"><em>资源</em></h5><p>1.基于Runtime的JSPatch库</p>
-<p>2.底层开发的书籍CFHipsterRef</p>
-<p>这将是自己对Runtime学习的方向，我会将应用到项目中的Runtime技能在博客中分享。</p>
+<p>特别注意：此方法在Objective-C方法定位机制之前</p>
+<hr>
+<p>解释<br>2.方法 <strong>forwardingTargetForSelector</strong></p>
+<pre><code>作用：返回未被识别的消息首先要定位到的对象。实现或者继承了这个方法的类在此方法中的返回值（一个对象）将会被用来做为一个消息的接收者，从而在这个接收者的方法列表中查找消息的实现。
+</code></pre><p>注意：</p>
+<ol>
+<li>如果在一个非基类的类中实现了此方法，如果对一个给定的selector这个类没有相应的返回值，那么应该调用其父类的方法作为返回值；</li>
+<li>相比<strong>forwardInvocation:</strong>方法的开销，此方法比较轻。适用于希望将消息重定位到另外一个对象的场景，而对于要捕获NSInvocation以及要在方法寻路的过程中操作参数或者返回值作为目的的场景并不太合适。</li>
+</ol>
+<hr>
+<p>解释：<br>3.方法：<strong>methodSignatureForSelector</strong></p>
+<blockquote>
+<p>NSMethodSignature</p>
+<blockquote>
+<p>1.用来转发那些接收对象不响应的消息。<br>2.之后用来创建NSInvocation对象，此对象之后将被用作<strong>forwardInvocation:</strong>的参数</p>
+</blockquote>
+</blockquote>
+<pre><code>作用：针对给定的<span class="keyword">select</span><span class="subst">or</span>返回一个包含了描述的NSMethodSignature对象。
+</code></pre><p>注意：此方法用于protocol的实现过程中，也适用于那些消息转发过程中必须创建NSInvocation对象的场景。</p>
+<hr>
+<p>解释：<strong>forwardInvocation</strong>方法</p>
+<pre><code>需要把消息转发到其他对象的类所必须重载的方法。
+</code></pre><blockquote>
+<p>消息转发机制使用从<code>methodSignatureForSelector:</code>中获得的信息来创建一个NSInnovacation对象来转发。你所重载的方法必须对给定的selector提供一个合适的方法签名，要么预先制定一个或者从其他对象中取出一个。</p>
+</blockquote>
+<p><code>forwardInvocation:</code>方法的实现有两个主要任务：</p>
+<ol>
+<li>需要定位到能够在传入的Invocation中所包含的消息能够响应的对象。这个对象要与所有想消息不同。</li>
+<li>使用Invocation向这个对象发送消息。Invaocation将会保存结果，且runtime系统将会取出并分发给原来的发送者。</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li>被转发的消息的参数个数必须是固定的。</li>
+<li>被转发的消息的返回值会被返回到原来的发送者，且返回值类型是任意的。</li>
+<li><code>forwardInvocation:</code>方法的实现中不仅可以做消息转发的工作，还可以做比如，对不同的消息的响应，而需要针对每一个响应都有一个独立的方法，将这些方法都统一到一起。反过来将，此方法也可以解决好几个对同一个消息响应的对象的关系，而不仅仅是将消息转发给不同的对象。</li>
+<li>作为基类的NSObject的<code>forwardInvocation:</code>方法会调用<em>doesNotRecognizeSelector:</em></li>
+</ul>
+<p>###_objc_msgForward进阶</p>
+<p>#####直接调用_objc_msgForward</p>
+<p>一旦调用_objc_msgForward，将跳过查找 IMP 的过程，直接触发“消息转发”，</p>
 
       
     </div>
@@ -261,18 +309,9 @@ Objective-C对象在Runti">
     
 <nav id="article-nav">
   
-    <a href="/2015/08/19/面试题整理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          面试题整理 (题目)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/08/12/上线发布检查清单（持续更新中）/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">上线发布检查清单（持续更新中）</div>
+    <a href="/2016/02/18/Parse-停止运营的看法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Parse 停止运营的看法</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -299,7 +338,7 @@ Objective-C对象在Runti">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="关于Runtime实际应用的疑惑" data-title="关于Runtime实际应用的疑惑" data-url="http://lynulzy.info/2015/08/14/关于Runtime实际应用的疑惑/"></div>
+	<div class="ds-thread" data-thread-key="objc-msgForward的学习" data-title="_objc_msgForward的学习" data-url="http://lynulzy.info/2016/02/20/objc-msgForward的学习/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
