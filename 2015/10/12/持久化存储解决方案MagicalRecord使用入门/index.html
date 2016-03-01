@@ -4,7 +4,13 @@
   <meta charset="utf-8">
   
   <title>持久化存储解决方案MagicalRecord使用入门 | lynulzy的自留地</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="持久化存储," />
+  
+
   <meta name="description" content="原文在这里
 众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。
 即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，MagicalPanda开">
@@ -26,208 +32,111 @@
 <meta name="twitter:description" content="原文在这里
 众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。
 即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，MagicalPanda开">
+
   
-    <link rel="alternative" href="/atom.xml" title="lynulzy的自留地" type="application/atom+xml">
+
   
+    <link rel="icon" href="/favicon.ico">
   
-    <link rel="icon" href="/favicon.png">
+
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
 </head>
+
 <body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="http://ww2.sinaimg.cn/large/77cf5fafgw1eulye2rw5wj20by0g1q41.jpg" class="js-avatar">
-			
-		</a>
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <div class="toolbox-entry">盒子</div>
+    <ul class="list-toolbox">
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/">博客</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/">分类</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/">标签</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/link/">友链</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/">关于</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml">RSS</a>
+          </li>
+        
+      
+    </ul>
+  </div>
 
-		<hgroup>
-		  <h1 class="header-author"><a href="/">lynulzy</a></h1>
-		</hgroup>
 
-		
-		<p class="header-subtitle">说点什么</p>
-		
-
-		
-			<div class="switch-btn">
-				<div class="icon">
-					<div class="icon-ctn">
-						<div class="icon-wrap icon-house" data-idx="0">
-							<div class="birdhouse"></div>
-							<div class="birdhouse_holes"></div>
-						</div>
-						<div class="icon-wrap icon-ribbon hide" data-idx="1">
-							<div class="ribbon"></div>
-						</div>
-						
-						<div class="icon-wrap icon-link hide" data-idx="2">
-							<div class="loopback_l"></div>
-							<div class="loopback_r"></div>
-						</div>
-						
-						
-						<div class="icon-wrap icon-me hide" data-idx="3">
-							<div class="user"></div>
-							<div class="shoulder"></div>
-						</div>
-						
-					</div>
-					
-				</div>
-				<div class="tips-box hide">
-					<div class="tips-arrow"></div>
-					<ul class="tips-inner">
-						<li>菜单</li>
-						<li>标签</li>
-						
-						<li>友情链接</li>
-						
-						
-						<li>关于我</li>
-						
-					</ul>
-				</div>
-			</div>
-		
-
-		<div class="switch-area">
-			<div class="switch-wrap">
-				<section class="switch-part switch-part1">
-					<nav class="header-menu">
-						<ul>
-						
-							<li><a href="/">主页</a></li>
-				        
-							<li><a href="/archives">所有文章</a></li>
-				        
-						</ul>
-					</nav>
-					<nav class="header-nav">
-						<div class="social">
-							
-								<a class="github" target="_blank" href="https://github.com/lynulzy" title="github">github</a>
-					        
-								<a class="weibo" target="_blank" href="http://weibo.com/u/2010079151" title="weibo">weibo</a>
-					        
-						</div>
-					</nav>
-				</section>
-				
-				
-				<section class="switch-part switch-part2">
-					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/MVVM/" style="font-size: 10px;">MVVM</a> <a href="/tags/Xcode-7/" style="font-size: 10px;">Xcode 7</a> <a href="/tags/runtime/" style="font-size: 10px;">runtime</a> <a href="/tags/上线-清单/" style="font-size: 10px;">上线 清单</a> <a href="/tags/报错/" style="font-size: 10px;">报错</a> <a href="/tags/持久化存储/" style="font-size: 20px;">持久化存储</a> <a href="/tags/文档、三方库/" style="font-size: 10px;">文档、三方库</a> <a href="/tags/涨姿势/" style="font-size: 10px;">涨姿势</a> <a href="/tags/版本控制-SVN/" style="font-size: 10px;">版本控制 SVN</a> <a href="/tags/面试、整理/" style="font-size: 10px;">面试、整理</a>
-					</div>
-				</section>
-				
-				
-				
-				<section class="switch-part switch-part3">
-					<div id="js-friends">
-					
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://cnfeat.com">cnfeat的博客</a>
-			        
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://litten.github.io">litten的博客</a>
-			        
-			        </div>
-				</section>
-				
-
-				
-				
-				<section class="switch-part switch-part4">
-				
-					<div id="js-aboutme">我的博客正在调试...</div>
-				</section>
-				
-			</div>
-		</div>
-	</header>				
 </div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-  	<div class="overlay">
-  		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">lynulzy</h1>
-  	</div>
-	<div class="intrude-less">
-		<header id="header" class="inner">
-			<div class="profilepic">
-				<img lazy-src="http://ww2.sinaimg.cn/large/77cf5fafgw1eulye2rw5wj20by0g1q41.jpg" class="js-avatar">
-			</div>
-			<hgroup>
-			  <h1 class="header-author">lynulzy</h1>
-			</hgroup>
-			
-			<p class="header-subtitle">说点什么</p>
-			
-			<nav class="header-menu">
-				<ul>
-				
-					<li><a href="/">主页</a></li>
-		        
-					<li><a href="/archives">所有文章</a></li>
-		        
-		        <div class="clearfix"></div>
-				</ul>
-			</nav>
-			<nav class="header-nav">
-				<div class="social">
-					
-						<a class="github" target="_blank" href="https://github.com/lynulzy" title="github">github</a>
-			        
-						<a class="weibo" target="_blank" href="http://weibo.com/u/2010079151" title="weibo">weibo</a>
-			        
-				</div>
-			</nav>
-		</header>				
-	</div>
-</nav>
-      <div class="body-wrap"><article id="post-持久化存储解决方案MagicalRecord使用入门" class="article article-type-post" itemscope itemprop="blogPost">
-  
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#构造_Beer_实体"><span class="toc-text">构造 Beer 实体</span></a></li></ol>
+  </div>
+
+
+<div class="content-post CENTER">
+   <article id="post-持久化存储解决方案MagicalRecord使用入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">持久化存储解决方案MagicalRecord使用入门</h1>
+
     <div class="article-meta">
-      <a href="/2015/10/12/持久化存储解决方案MagicalRecord使用入门/" class="article-date">
-  	<time datetime="2015-10-12T14:51:11.000Z" itemprop="datePublished">2015-10-12</time>
-</a>
+      <span>2015-10-12</span>
+
+      <span> | </span>
+
+      <span class="article-author">lynulzy</span>
+
+      <span> | </span>
+
+      
+
     </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      持久化存储解决方案MagicalRecord使用入门
-    </h1>
-  
+  </header>
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/持久化存储/">持久化存储</a></li></ul>
-	</div>
-
-        
-
-        <div class="clearfix"></div>
-      </div>
-      
+  <div class="article-content">
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原文在<a href="http://www.raywenderlich.com/106856/getting-started-magicalrecord" target="_blank" rel="external">这里</a></p>
+      <p>原文在<a href="http://www.raywenderlich.com/106856/getting-started-magicalrecord" target="_blank" rel="external">这里</a></p>
 <p>众所周知，Core Data 是苹果内置关于用户数据持久化的解决方案，无论在 iOS 平台还是 OS X 平台，它都是通用的。尽管苹果一直秉持着最大化的使编程简单的宗旨，但是 Core Data 上手对于有经验的开发者也不是一件易事。</p>
 <p>即便是你知道如何使用 Core Data ，很简单的日常任务，在使用了 Core Data 之后会变得笨重而繁琐。 好消息是，<a href="http://www.magicalpanda.com" target="_blank" rel="external">MagicalPanda</a>开源了一个针对 Core Data 的三方库 – <a href="https://github.com/magicalpanda/MagicalRecord" target="_blank" rel="external">MagicalRecord</a>。 MagicalRecord 提供了便利的方法来创建那些使用Core Data 所必须的代码，诸如对 Core Data 的设置、查询、更新。它的设计灵感来源于德高望重的 <em>Active Record</em> 设计模式。</p>
 <p>本教程将让你快速上手 MagicalRecord： 你将创建一个应用来追踪你最喜爱的beer（或者其他类似的饮料），它将具备以下功能：</p>
@@ -383,132 +292,52 @@
 <p>###结语<br>最终的项目代码在<a href="http://cdn4.raywenderlich.com/wp-content/uploads/2015/05/BeerTracker-Final-Swift.zip" target="_blank" rel="external">这里</a>,如果被卡在某个步骤的时候可以参考一下。</p>
 <hr>
 
-      
-    </div>
     
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2015/10/14/临时数据存储和筛选-FMDB的学习和研究/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          临时数据存储和筛选--FMDB的学习和研究
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/09/29/CocoaPods使用注意事项/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CocoaPods使用注意事项</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-  
-
-
-<div class="share">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">分享到：</span>
-		<a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
-
-
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="持久化存储解决方案MagicalRecord使用入门" data-title="持久化存储解决方案MagicalRecord使用入门" data-url="http://lynulzy.info/2015/10/12/持久化存储解决方案MagicalRecord使用入门/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"lynulzy"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
-
-
 </article>
 
+
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+
+
+
 </div>
-      <footer id="footer">
-  <div class="outer">
-    <div id="footer-info">
-    	<div class="footer-left">
-    		&copy; 2016 lynulzy
-    	</div>
-      	<div class="footer-right">
-      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
-      	</div>
-    </div>
-  </div>
-</footer>
-    </div>
-    
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
 
-
+  
 <script>
-	var yiliaConfig = {
-		fancybox: true,
-		mathjax: true,
-		animate: true,
-		isHome: false,
-		isPost: true,
-		isArchive: false,
-		isTag: false,
-		isCategory: false,
-		open_in_new: false
-	}
-</script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
-
-
-
-
-
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';                 
-    }       
-});
-</script>
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  var disqus_shortname = 'forsigner';
+  
+  var disqus_url = 'http://lynulzy.info/2015/10/12/持久化存储解决方案MagicalRecord使用入门/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
 </script>
 
 
-  </div>
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"undefined"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0]
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!-- 多说公共JS代码 end -->
+
 </body>
 </html>
